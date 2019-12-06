@@ -10,10 +10,9 @@ class Vertex extends Component {
     handleClick(e){
         e.cancelBubble = true;
         const {index, selectedVertex, selectVertex, addEdge} = this.props
-        console.log(this.props)
         if (index === selectedVertex)
             selectVertex(null);
-        else if (selectedVertex)
+        else if (selectedVertex !== null)
             addEdge(selectedVertex, index);
         else
             selectVertex(index);
@@ -26,8 +25,8 @@ class Vertex extends Component {
                 x={this.props.x} y={this.props.y}
                 radius={isSelected ? 8 : 6}
                 fill={'blue'}
-                stroke={'black'}
-                strokeWidth={isSelected ? 2 : 1}
+                stroke={isSelected ? 'green' : 'black'}
+                strokeWidth={isSelected ? 4 : 1}
                 onClick={this.handleClick}
                 draggable={true}
                 shadowColor={'black'}
