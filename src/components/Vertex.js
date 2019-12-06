@@ -5,6 +5,7 @@ class Vertex extends Component {
     constructor(...args) {
         super(...args);
         this.handleClick = this.handleClick.bind(this);
+        this.onDrag = this.onDrag.bind(this);
     }
 
     handleClick(e){
@@ -18,6 +19,10 @@ class Vertex extends Component {
             selectVertex(index);
     }
 
+    onDrag(e){
+        const {index, updateVertex} = this.props;
+        updateVertex(index, e.target.x(), e.target.y());
+    }
     render() {
         const isSelected = this.props.index === this.props.selectedVertex;
         return (
@@ -33,6 +38,7 @@ class Vertex extends Component {
                 shadowBlur={isSelected ? 4 : 2}
                 shadowOffset={isSelected ? {x: 2, y: 2 } : {x: 1, y: 1 }}
                 shadowOpacity={0.5}
+                onDragMove={this.onDrag}
             />
         )
     }
