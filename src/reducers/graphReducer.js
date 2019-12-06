@@ -20,6 +20,15 @@ export default (state = initialState, action) => {
                 ...state,
                 selectedVertex: index
             }
+        case 'ADD_EDGE':
+            let {v1, v2} = action;
+            return {
+                ...state,
+                edges:
+                    [
+                        ...state.edges, [v1, v2]
+                    ]
+            }
         default:
             return state
     }
