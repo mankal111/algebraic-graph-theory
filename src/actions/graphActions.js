@@ -13,7 +13,7 @@ export const selectVertex = (index) => dispatch => {
     });
 }
 
-export const addEgde = (v1, v2) => dispatch => {
+export const addEdge = (v1, v2) => dispatch => {
     dispatch({
         type: 'ADD_EDGE',
         v1,
