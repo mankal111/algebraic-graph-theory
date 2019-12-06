@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Layer, Stage } from 'react-konva';
 import Vertex from './Vertex';
 import {connect} from 'react-redux';
-import {addVertex} from '../actions/vertexActions';
+import {addVertex} from '../actions/graphActions';
 
 class GraphCanvas extends Component {
     constructor(...args) {
