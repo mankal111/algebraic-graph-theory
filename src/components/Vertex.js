@@ -9,25 +9,30 @@ class Vertex extends Component {
 
     handleClick(e){
         e.cancelBubble = true;
-        if (this.props.selected)
-            this.props.selectVertex(null);
+        const {index, selectedVertex, selectVertex, addEdge} = this.props
+        console.log(this.props)
+        if (index === selectedVertex)
+            selectVertex(null);
+        else if (selectedVertex)
+            addEdge(selectedVertex, index);
         else
-            this.props.selectVertex(this.props.index);
+            selectVertex(index);
     }
 
     render() {
+        const isSelected = this.props.index === this.props.selectedVertex;
         return (
             <Circle
                 x={this.props.x} y={this.props.y}
-                radius={this.props.selected ? 8 : 6}
+                radius={isSelected ? 8 : 6}
                 fill={'blue'}
                 stroke={'black'}
-                strokeWidth={this.props.selected ? 2 : 1}
+                strokeWidth={isSelected ? 2 : 1}
                 onClick={this.handleClick}
                 draggable={true}
                 shadowColor={'black'}
-                shadowBlur={this.props.selected ? 4 : 2}
-                shadowOffset={this.props.selected ? {x: 2, y: 2 } : {x: 1, y: 1 }}
+                shadowBlur={isSelected ? 4 : 2}
+                shadowOffset={isSelected ? {x: 2, y: 2 } : {x: 1, y: 1 }}
                 shadowOpacity={0.5}
             />
         )

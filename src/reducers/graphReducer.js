@@ -1,5 +1,6 @@
 const initialState = {
     vertices: [],
+    edges: [],
     selectedVertex: null
 }
 
