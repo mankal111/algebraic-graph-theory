@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Layer, Stage } from 'react-konva';
 import Vertex from './Vertex';
+import Edge from './Edge';
 import { connect } from 'react-redux';
 import { addVertex, selectVertex, addEdge } from '../actions/graphActions';
 
@@ -16,9 +17,20 @@ class GraphCanvas extends Component {
     }
 
     render() {
-        const { vertices, selectedVertex, selectVertex, addEdge } = this.props;
+        const { vertices, edges, selectedVertex, selectVertex, addEdge } = this.props;
         return (
             <Stage width={window.innerWidth} height={window.innerHeight} onClick={this.handleClick} ref="stage" >
+                <Layer>
+                    {
+                        edges.map( (edge, index) =>
+                            <Edge
+                                key={index}
+                                v1={vertices[edge[0]]}
+                                v2={vertices[edge[1]]}
+                            />
+                        )
+                    }
+                </Layer>
                 <Layer>
                     {
                         vertices.map( (vertice, index) => 
