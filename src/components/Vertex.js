@@ -18,12 +18,17 @@ class Vertex extends Component {
     render() {
         return (
             <Circle
-                x={this.props.x} y={this.props.y} radius={6}
-                fill={this.props.selected ? 'red' : 'blue'}
+                x={this.props.x} y={this.props.y}
+                radius={this.props.selected ? 8 : 6}
+                fill={'blue'}
                 stroke={'black'}
-                strokeWidth={2}
+                strokeWidth={this.props.selected ? 2 : 1}
                 onClick={this.handleClick}
                 draggable={true}
+                shadowColor={'black'}
+                shadowBlur={this.props.selected ? 4 : 2}
+                shadowOffset={this.props.selected ? {x: 2, y: 2 } : {x: 1, y: 1 }}
+                shadowOpacity={0.5}
             />
         )
     }
