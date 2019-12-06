@@ -13,6 +13,7 @@ class GraphCanvas extends Component {
 
     handleClick() {
         var {x, y} = this.refs.stage.getPointerPosition();
+        this.props.selectVertex(null);
         this.props.addVertex(x, y);
     }
 
