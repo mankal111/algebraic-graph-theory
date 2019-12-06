@@ -25,7 +25,7 @@ class Vertex extends Component {
                 x={this.props.x} y={this.props.y}
                 radius={isSelected ? 8 : 6}
                 fill={'blue'}
-                stroke={isSelected ? 'green' : 'black'}
+                stroke={isSelected ? 'LimeGreen' : 'black'}
                 strokeWidth={isSelected ? 4 : 1}
                 onClick={this.handleClick}
                 draggable={true}
