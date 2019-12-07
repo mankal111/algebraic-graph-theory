@@ -6,6 +6,13 @@ export const addVertex = (x, y) => dispatch => {
     });
 }
 
+export const deleteVertex = (index) => dispatch => {
+    dispatch({
+        type: 'DELETE_VERTEX',
+        index
+    });
+}
+
 export const selectVertex = (index) => dispatch => {
     dispatch({
         type: 'SELECT_VERTEX',
@@ -27,5 +34,12 @@ export const addEdge = (v1, v2) => dispatch => {
         type: 'ADD_EDGE',
         v1,
         v2
+    });
+}
+
+export const deleteEdge = (index) => dispatch => {
+    dispatch({
+        type: 'DELETE_EDGE',
+        index
     });
 }
