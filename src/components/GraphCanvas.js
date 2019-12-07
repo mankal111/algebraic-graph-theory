@@ -13,7 +13,9 @@ class GraphCanvas extends Component {
 
     handleClick(e) {
         var {x, y} = this.refs.stage.getPointerPosition();
+        // Deselect vertices when any mouse button is clicked in canvas(not on its elements)
         this.props.selectVertex(null);
+        // Add vertex if left button is clicked
         if (e.evt.button === 0)
             this.props.addVertex(x, y);
     }
@@ -26,6 +28,7 @@ class GraphCanvas extends Component {
                 height={window.innerHeight}
                 onClick={this.handleClick}
                 ref="stage"
+                // Prevent context menu since we are using right click for deselecting and deleting
                 onContextMenu={(e) => e.evt.preventDefault()}
             >
                 <Layer>
