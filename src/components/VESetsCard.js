@@ -13,7 +13,7 @@ export default function VESetsCard({ vertices, edges }){
                 aria-controls="VAndESets"
                 aria-expanded={open}
             >
-                Vertex and Edge sets of the graph
+                Vertex and Edge sets
             </Card.Header>
             <Collapse in={open}>
                 <Card.Body id="VAndESets">
@@ -22,7 +22,7 @@ export default function VESetsCard({ vertices, edges }){
                     <InlineMath math={`\\}`} />
                     <br/>
                     <InlineMath math={`E\\Gamma=\\{`}/>
-                    {edges.map((v,i) => <InlineMath key={i} math={`\\{v_${v[0]+1}, v_{${v[1]+1}}\\}${i<edges.length-1?',':''}`}/>)}
+                    {edges.map((v,i) => <InlineMath key={i} math={`\\{v_{${v[0]+1}}, v_{${v[1]+1}}\\}${i<edges.length-1?',':''}`}/>)}
                     <InlineMath math={`\\}`} />
                 </Card.Body>
             </Collapse>
