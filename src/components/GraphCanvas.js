@@ -3,7 +3,7 @@ import { Layer, Stage } from 'react-konva';
 import Vertex from './Vertex';
 import Edge from './Edge';
 import { connect } from 'react-redux';
-import { addVertex, selectVertex, updateVertex, addEdge, deleteEdge } from '../actions/graphActions';
+import { addVertex, deleteVertex, selectVertex, updateVertex, addEdge, deleteEdge } from '../actions/graphActions';
 
 class GraphCanvas extends Component {
     constructor(...args) {
@@ -21,7 +21,8 @@ class GraphCanvas extends Component {
     }
 
     render() {
-        const { vertices, edges, selectedVertex, selectVertex, addEdge, deleteEdge, updateVertex } = this.props;
+        const { vertices, edges, selectedVertex, deleteVertex,
+            selectVertex, addEdge, deleteEdge, updateVertex } = this.props;
         return (
             <Stage 
                 width={window.innerWidth}
@@ -56,6 +57,7 @@ class GraphCanvas extends Component {
                                 selectVertex={selectVertex}
                                 addEdge={addEdge}
                                 updateVertex={updateVertex}
+                                deleteVertex={deleteVertex}
                             />
                         )
                     }
@@ -71,6 +73,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     addVertex: (x,y) => dispatch(addVertex(x,y)),
+    deleteVertex: index => dispatch(deleteVertex(index)),
     selectVertex: index => dispatch(selectVertex(index)),
     addEdge: (v1, v2) => dispatch(addEdge(v1, v2)),
     deleteEdge: index => dispatch(deleteEdge(index)),

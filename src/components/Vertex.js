@@ -13,13 +13,17 @@ class Vertex extends Component {
 
     handleClick(e){
         e.cancelBubble = true;
-        const {index, selectedVertex, selectVertex, addEdge} = this.props
-        if (index === selectedVertex)
-            selectVertex(null);
-        else if (selectedVertex !== null)
-            addEdge(selectedVertex, index);
-        else
-            selectVertex(index);
+        const {index, selectedVertex, selectVertex, deleteVertex, addEdge} = this.props;
+        if (e.evt.button === 0) {
+            if (index === selectedVertex)
+                selectVertex(null);
+            else if (selectedVertex !== null)
+                addEdge(selectedVertex, index);
+            else
+                selectVertex(index);
+        } else if (e.evt.button === 2) {
+            deleteVertex(index);
+        }
     }
 
     onDrag(e){

@@ -6,6 +6,13 @@ export const addVertex = (x, y) => dispatch => {
     });
 }
 
+export const deleteVertex = (index) => dispatch => {
+    dispatch({
+        type: 'DELETE_VERTEX',
+        index
+    });
+}
+
 export const selectVertex = (index) => dispatch => {
     dispatch({
         type: 'SELECT_VERTEX',

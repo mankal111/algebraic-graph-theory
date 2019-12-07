@@ -21,6 +21,29 @@ export default (state = initialState, action) => {
                 ...state,
                 selectedVertex: index
             }
+        case 'DELETE_VERTEX':
+            {
+                const {index} = action;
+                const {vertices, edges, selectedVertex} = state;
+
+                return {
+                    ...state,
+                    vertices: vertices.filter((v, i) => i !== index),
+                    edges: edges
+                        // Remove all edges containing the vertex
+                        .filter(v => v[0] !== index && v[1] !== index)
+                        // Transpose all indices above the deleted one
+                        .map(
+                            v =>
+                            [
+                                v[0] > index ? v[0] - 1 : v[0],
+                                v[1] > index ? v[1] - 1 : v[1]
+                            ]
+                        ),
+                    // Transpose selectedVertex index above the deleted one
+                    selectedVertex: selectedVertex > index ? selectedVertex - 1 : selectedVertex
+                }
+            }
         case 'UPDATE_VERTEX':
             {
                 const {index, x, y} = action;
