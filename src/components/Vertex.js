@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Circle } from 'react-konva';
+import { Circle, Group, Text } from 'react-konva';
 import { throttle } from 'lodash';
 
 class Vertex extends Component {
@@ -31,24 +31,35 @@ class Vertex extends Component {
     }
 
     render() {
-        const isSelected = this.props.index === this.props.selectedVertex;
+        const {x, y, index, selectedVertex} = this.props
+        const isSelected = index === selectedVertex;
         return (
-            <Circle
-                x={this.props.x} y={this.props.y}
-                radius={isSelected ? 8 : 6}
-                fill={'blue'}
-                stroke={isSelected ? 'LimeGreen' : 'black'}
-                strokeWidth={isSelected ? 4 : 1}
-                onClick={this.handleClick}
-                draggable={true}
-                shadowColor={'black'}
-                shadowBlur={isSelected ? 4 : 2}
-                shadowOffset={isSelected ? {x: 2, y: 2 } : {x: 1, y: 1 }}
-                shadowOpacity={0.5}
-                onDragMove={this.onDrag}
-                // Allow click 20 pixels around vertex
-                hitStrokeWidth={20}
-            />
+            <Group>
+                <Text
+                    x={x + 8}
+                    y={y + 8}
+                    text={index + 1}
+                    fill={'black'}
+                    fontFamily={'ArialBlack'}
+                    fontStyle={'bold'}
+                />
+                <Circle
+                    x={x} y={y}
+                    radius={isSelected ? 8 : 6}
+                    fill={'blue'}
+                    stroke={isSelected ? 'LimeGreen' : 'black'}
+                    strokeWidth={isSelected ? 4 : 1}
+                    onClick={this.handleClick}
+                    draggable={true}
+                    shadowColor={'black'}
+                    shadowBlur={isSelected ? 4 : 2}
+                    shadowOffset={isSelected ? {x: 2, y: 2 } : {x: 1, y: 1 }}
+                    shadowOpacity={0.5}
+                    onDragMove={this.onDrag}
+                    // Allow click 20 pixels around vertex
+                    hitStrokeWidth={20}
+                />
+            </Group>
         )
     }
 }
