@@ -40,8 +40,11 @@ export default (state = initialState, action) => {
                                 v[1] > index ? v[1] - 1 : v[1]
                             ]
                         ),
-                    // Transpose selectedVertex index above the deleted one
-                    selectedVertex: selectedVertex > index ? selectedVertex - 1 : selectedVertex
+                    // If the deleted vertex was the selected one, deselect it
+                    // if not, update its value
+                    selectedVertex: selectedVertex === index ?
+                        null :
+                        selectedVertex > index ? selectedVertex - 1 : selectedVertex
                 }
             }
         case 'UPDATE_VERTEX':
