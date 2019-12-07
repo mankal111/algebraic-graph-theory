@@ -11,16 +11,23 @@ class GraphCanvas extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick() {
+    handleClick(e) {
         var {x, y} = this.refs.stage.getPointerPosition();
         this.props.selectVertex(null);
-        this.props.addVertex(x, y);
+        if (e.evt.button === 0)
+            this.props.addVertex(x, y);
     }
 
     render() {
         const { vertices, edges, selectedVertex, selectVertex, addEdge, updateVertex } = this.props;
         return (
-            <Stage width={window.innerWidth} height={window.innerHeight} onClick={this.handleClick} ref="stage" >
+            <Stage 
+                width={window.innerWidth}
+                height={window.innerHeight}
+                onClick={this.handleClick}
+                ref="stage"
+                onContextMenu={(e) => e.evt.preventDefault()}
+            >
                 <Layer>
                     {
                         edges.map( (edge, index) =>
