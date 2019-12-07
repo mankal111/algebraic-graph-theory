@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { Circle } from 'react-konva';
+import { throttle } from 'lodash';
 
 class Vertex extends Component {
     constructor(...args) {
         super(...args);
         this.handleClick = this.handleClick.bind(this);
+        this.onDrag = this.onDrag.bind(this);
+        // used throttle to prevent too many updates
+        this.delayedUpdateVertex = throttle((i,x,y) => this.props.updateVertex(i,x,y), 50);
     }
 
     handleClick(e){
@@ -16,6 +20,10 @@ class Vertex extends Component {
             addEdge(selectedVertex, index);
         else
             selectVertex(index);
+    }
+
+    onDrag(e){
+        this.delayedUpdateVertex(this.props.index, e.target.x(), e.target.y());
     }
 
     render() {
@@ -33,6 +41,7 @@ class Vertex extends Component {
                 shadowBlur={isSelected ? 4 : 2}
                 shadowOffset={isSelected ? {x: 2, y: 2 } : {x: 1, y: 1 }}
                 shadowOpacity={0.5}
+                onDragMove={this.onDrag}
             />
         )
     }

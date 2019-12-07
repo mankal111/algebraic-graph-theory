@@ -7,7 +7,7 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case 'ADD_VERTEX':
-            let {x, y} = action;
+            const {x, y} = action;
             return {
                 ...state,
                 vertices:
@@ -16,10 +16,21 @@ export default (state = initialState, action) => {
                     ]
             }
         case 'SELECT_VERTEX':
-            let { index } = action;
+            const { index } = action;
             return {
                 ...state,
                 selectedVertex: index
+            }
+        case 'UPDATE_VERTEX':
+            {
+                const {index, x, y} = action;
+                const newVertices = [...state.vertices];
+                newVertices[index][0] = x;
+                newVertices[index][1] = y;
+                return {
+                    ...state,
+                    vertices: newVertices
+                }
             }
         case 'ADD_EDGE':
             let {v1, v2} = action;
