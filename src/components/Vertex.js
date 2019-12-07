@@ -42,6 +42,8 @@ class Vertex extends Component {
                 shadowOffset={isSelected ? {x: 2, y: 2 } : {x: 1, y: 1 }}
                 shadowOpacity={0.5}
                 onDragMove={this.onDrag}
+                // Allow click 20 pixels around vertex
+                hitStrokeWidth={20}
             />
         )
     }
