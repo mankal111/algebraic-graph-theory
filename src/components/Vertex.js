@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Circle } from 'react-konva';
+import { throttle } from 'lodash';
 
 class Vertex extends Component {
     constructor(...args) {
         super(...args);
         this.handleClick = this.handleClick.bind(this);
         this.onDrag = this.onDrag.bind(this);
+        // used throttle to prevent too many updates
+        this.delayedUpdateVertex = throttle((i,x,y) => this.props.updateVertex(i,x,y), 50);
     }
 
     handleClick(e){
@@ -20,9 +23,9 @@ class Vertex extends Component {
     }
 
     onDrag(e){
-        const {index, updateVertex} = this.props;
-        updateVertex(index, e.target.x(), e.target.y());
+        this.delayedUpdateVertex(this.props.index, e.target.x(), e.target.y());
     }
+
     render() {
         const isSelected = this.props.index === this.props.selectedVertex;
         return (
