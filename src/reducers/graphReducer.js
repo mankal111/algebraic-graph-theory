@@ -44,6 +44,16 @@ export default (state = initialState, action) => {
                             ...state.edges, [v1, v2]
                         ]
                 }
+        case 'DELETE_EDGE':
+            {
+                const {index} = action;
+                const {edges} = state;
+                return {
+                    ...state,
+                    edges:
+                        edges.filter((v, i) => i !== index)
+                }
+            }
         default:
             return state
     }

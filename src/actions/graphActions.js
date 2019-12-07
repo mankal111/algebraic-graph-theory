@@ -29,3 +29,10 @@ export const addEdge = (v1, v2) => dispatch => {
         v2
     });
 }
+
+export const deleteEdge = (index) => dispatch => {
+    dispatch({
+        type: 'DELETE_EDGE',
+        index
+    });
+}
