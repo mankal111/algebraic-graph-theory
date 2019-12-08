@@ -2,17 +2,12 @@ import React, { useState } from 'react';
 import 'katex/dist/katex.min.css';
 import { InlineMath } from "react-katex";
 import { Card, Collapse } from 'react-bootstrap';
-import { arrayToLatexMatrix } from '../matrix';
+import { arrayToLatexMatrix, adjacencyMatrix } from '../matrix';
 
 export default function AdjacencyMatrixCard({ vertices, edges }){
     const [open, setOpen] = useState(true);
-    // Create a new matrix with zeros
-    let matrix = Array(vertices.length).fill().map(() => Array(vertices.length).fill(0));
-    // Put 1 in matrix for every edge
-    for (let i=0; i < edges.length; i++) {
-        matrix[edges[i][0]][edges[i][1]] = 1;
-        matrix[edges[i][1]][edges[i][0]] = 1;
-    }
+    // Create the latex text that describes the adjacencyMatrix
+    let latexAdjMatrix = arrayToLatexMatrix(adjacencyMatrix(vertices.length, edges));
     return (
         <Card>
             <Card.Header
@@ -24,7 +19,7 @@ export default function AdjacencyMatrixCard({ vertices, edges }){
             </Card.Header>
             <Collapse in={open}>
                 <Card.Body id="AdjMatrix">
-                <InlineMath math={arrayToLatexMatrix(matrix)}/>
+                <InlineMath math={latexAdjMatrix}/>
                 </Card.Body>
             </Collapse>
         </Card>
