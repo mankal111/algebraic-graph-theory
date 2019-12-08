@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Row, Col, Jumbotron } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,15 +12,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Container>
+        <Container fluid>
               <h1>Algebraic Graph Theory</h1>
           <Row>
-            <Col md={8}>
-              <Jumbotron>
-                <GraphCanvas />
-              </Jumbotron>
+            <Col md={7}>
+              <GraphCanvas/>
             </Col>
-            <Col md={4}>
+            <Col md={5}>
               <GraphDataPanel />
             </Col>
           </Row>
