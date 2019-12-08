@@ -1,5 +1,5 @@
-import { arrayToLatexMatrix, zeros, adjacencyMatrix, characteristicPolynomial,
-    determinant, determinantExpression, minorMatrix } from './matrix';
+import { arrayToLatexMatrix, zeros, adjacencyMatrix, characteristicPolynomialLatex,
+    determinant, determinantExpressionString, minorMatrix } from './matrix';
 
 it('converts array to latex matrix', () => {
     expect(arrayToLatexMatrix([[1, 2],[3, 4]])).toEqual("\\begin{vmatrix}1&2\\\\3&4\\end{vmatrix}");
@@ -22,13 +22,14 @@ it('returns the determinant', () => {
     expect(determinant([[1,2],[3,4]])).toEqual(-2);
     expect(determinant([[1,2,3],[4,5,6],[7,8,9]])).toEqual(0);
     expect(determinant([[1,2,3],[1,5,6],[7,8,9]])).toEqual(-18);
-    expect(determinant([['l',1],[1,'l']])).toEqual(-2);
 });
 
-it('returns the determinant expression', () => {
-    expect(determinantExpression([['l',1],[1,'l']])).toEqual('l^2-1');
+it('returns the determinant expression string', () => {
+    expect(determinantExpressionString([['t',1],[1,'t']])).toEqual('t^2 - 1');
+    expect(determinantExpressionString([['t',1,1],[1,'t',1],[1,1,'t']])).toEqual("t^3 - 3t + 2");
 });
 
-it('returns the characteristic polynomial of an array', () => {
-    expect(characteristicPolynomial([[0,1],[1,0]])).toEqual("t^2-1");
+it('returns the characteristic polynomial latex of an array', () => {
+    expect(characteristicPolynomialLatex([[0,1],[1,0]])).toEqual("t^{2} - 1");
+    expect(characteristicPolynomialLatex([[0,1,1],[1,0,1],[1,1,0]])).toEqual("t^3 - 3t + 2");
 });
