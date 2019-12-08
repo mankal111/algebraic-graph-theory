@@ -8,7 +8,7 @@ export default function AdjacencyMatrixCard({ vertices, edges }){
     // Create a new matrix with zeros
     let matrix = Array(vertices.length).fill().map(() => Array(vertices.length).fill(0));
     // Put 1 in matrix for every edge
-    for (let i=0; i< edges.length; i++) {
+    for (let i=0; i < edges.length; i++) {
         matrix[edges[i][0]][edges[i][1]] = 1;
         matrix[edges[i][1]][edges[i][0]] = 1;
     }
