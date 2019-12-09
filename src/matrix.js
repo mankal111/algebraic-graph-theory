@@ -1,12 +1,9 @@
-import { create, all } from 'mathjs';
-import  algebra from 'algebra.js';
-
-const config = { };
-const math = create(all, config);
-
+import algebra from 'algebra.js';
+import { get } from 'https';
+const Algebrite = require('algebrite');
 
 export const arrayToLatexMatrix = (array) =>
-    `\\begin{vmatrix}${array.map(row => row.join('&')).join('\\\\')}\\end{vmatrix}`;
+    `\\begin{bmatrix}${array.map(row => row.join('&')).join('\\\\')}\\end{bmatrix}`;
 
 export const zeros = (h, w) =>
     Array(h).fill().map(() => Array(w).fill(0));
@@ -30,23 +27,6 @@ export const minorMatrix = (array, i, j) => {
         .map(row => row.filter((el,index) => index !== j));
 }
 
-// This is not the fastest algorithm for finding the determinant
-export const determinant = (array) => {
-    if (array.length === 1) {
-        // In 1X1 the determinant is the unique element
-        return array[0][0];
-    } else if (array.length === 2) {
-        // In 2X2 the following is the determinant. We will use it as
-        // the first step in this recursive method.
-        return array[0][0]*array[1][1] - array[0][1]*array[1][0];
-    }
-    let det = 0;
-    for (let i = 0; i < array.length; i++){
-        det += Math.pow(-1, i)*array[0][i]*determinant(minorMatrix(array,0,i));
-    }
-    return det;
-}
-
 // Returns the determinant expression which will be used
 // for the computation of the characterestic polynomial
 export const determinantExpressionObject = (array) => {
@@ -68,9 +48,6 @@ export const determinantExpressionObject = (array) => {
     return det;
 }
 
-export const determinantExpressionString = (array) =>
-    determinantExpressionObject(array).toString();
-
 export const determinantExpressionLatex = (array) =>
     algebra.toTex(determinantExpressionObject(array));
 
@@ -86,11 +63,55 @@ export const convertArrayToObjectMatrix = (array) => {
     return matrix;
 }
 
-export const characteristicPolynomialLatex = (array) => {
+export const roundComplex = n => {
+    // Function that rounds a number to at most 2 decimal places
+    const roundToTwoD = n => Math.round(n * 100) / 100;
+    // If the expression contains 'i', it is complex
+    if (n.includes('i')){
+        // Extract the two numbers of the expression
+        const [real, imaginary] = n.match(/[+-]*\d*\.?\d+/g).map(x => roundToTwoD(x));
+        // If imaginary is undefined it means that there is no real,
+        // and the imaginary is in the first position
+        if (imaginary === undefined) return `${real}i`;
+        // If imaginary is 0 then just return the real part
+        if (imaginary === 0) return real;
+        // If the real part is 0 just return the imaginary
+        if (real === 0) return `${imaginary}i`;
+        // Else return the complex
+        return `${real}${imaginary > 0 ? '+' : ''}${imaginary}i`;
+    }
+    return roundToTwoD(n);
+}
+
+export const getEigenvalues = (array) => {
+    // Get the roots of the polynomial
+    return Algebrite.run(`nroots(${characteristicPolynomialObject(array).toString()})`)
+        .toString()
+        // remove '[', ']' and '...'
+        .replace(/(\[|\]|\.\.\.)/g, '')
+        // split the numbers
+        .split(',')
+        // and round them
+        .map(n => roundComplex(n));
+}
+
+export const characteristicPolynomialObject = (array) => {
     let matrix = convertArrayToObjectMatrix(array);
     // Subtract t from the diagonal
     for (let i=0; i < matrix.length; i++){
         matrix[i][i] = matrix[i][i].subtract('t');
     }
-    return determinantExpressionLatex(matrix);
+    return determinantExpressionObject(matrix);
+}
+
+export const characteristicPolynomialLatex = (array) => {
+    return algebra.toTex(characteristicPolynomialObject(array));
+}
+
+export const spectrumMatrixLatex = (array) => {
+    const eigenvalues = getEigenvalues(array);
+    const spectrum = [...new Set(eigenvalues)].map(
+        x => [x, eigenvalues.filter(y => y === x).length]
+      );
+    return `\\begin{bmatrix}${spectrum.map(row => row[0]).join('&')}\\\\${spectrum.map(row => row[1]).join('&')}\\end{bmatrix}`;
 }

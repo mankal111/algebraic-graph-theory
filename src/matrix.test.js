@@ -1,8 +1,8 @@
 import { arrayToLatexMatrix, zeros, adjacencyMatrix, characteristicPolynomialLatex,
-    determinant, determinantExpressionString, minorMatrix, convertArrayToObjectMatrix } from './matrix';
+    spectrumMatrixLatex, minorMatrix, getEigenvalues, roundComplex } from './matrix';
 
 it('converts array to latex matrix', () => {
-    expect(arrayToLatexMatrix([[1, 2],[3, 4]])).toEqual("\\begin{vmatrix}1&2\\\\3&4\\end{vmatrix}");
+    expect(arrayToLatexMatrix([[1, 2],[3, 4]])).toEqual("\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}");
 });
 
 it('returns array of zeros', () => {
@@ -18,21 +18,23 @@ it('returns the minor matrix', () => {
     expect(minorMatrix([[1,2,3],[4,5,6],[7,8,9]], 1, 1)).toEqual([[1,3],[7,9]]);
 });
 
-it('returns the determinant', () => {
-    expect(determinant([[1,2],[3,4]])).toEqual(-2);
-    expect(determinant([[1,2,3],[4,5,6],[7,8,9]])).toEqual(0);
-    expect(determinant([[1,2,3],[1,5,6],[7,8,9]])).toEqual(-18);
-});
-
-it('returns the determinant expression string', () => {
-    let matrix = convertArrayToObjectMatrix([['t',1],[1,'t']]);
-    expect(determinantExpressionString(matrix)).toEqual('t^2 - 1');
-    matrix = convertArrayToObjectMatrix([['t',1,1],[1,'t',1],[1,1,'t']]);
-    expect(determinantExpressionString(matrix)).toEqual("t^3 - 3t + 2");
-});
-
 it('returns the characteristic polynomial latex of an array', () => {
     expect(characteristicPolynomialLatex([[0,1],[1,0]])).toEqual("t^{2} - 1");
     expect(characteristicPolynomialLatex([[0,1,1],[1,0,1],[1,1,0]])).toEqual("-t^{3} + 3t + 2");
 });
 
+it('returns the eigenvalues of an array', () => {
+    expect(getEigenvalues([[0,1],[1,0]])).toEqual([-1,1]);
+    expect(getEigenvalues([[0,1,1],[1,0,1],[1,1,0]])).toEqual([2,-1,-1]);
+});
+
+it('rounds complex', () => {
+    expect(roundComplex('2.000')).toEqual(2);
+    expect(roundComplex('-3.000001i')).toEqual('-3i');
+    expect(roundComplex('2.123456-3.000001i')).toEqual('2.12-3i');
+    expect(roundComplex('2-3i')).toEqual('2-3i');
+})
+
+it('get spectrum latex', () => {
+    expect(spectrumMatrixLatex([[0,1,1,1],[1,0,1,1],[1,1,0,1],[1,1,1,0]])).toEqual("\\begin{bmatrix}3&-1\\\\1&3\\end{bmatrix}");
+})
