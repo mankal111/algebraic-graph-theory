@@ -56,11 +56,7 @@ export const determinantExpressionObject = (array) => {
     } else if (array.length === 2) {
         // In 2X2 the following is the determinant. We will use it as
         // the first step in this recursive method.
-        let exp1 = new algebra.Expression(array[0][0]);
-        exp1 = exp1.multiply(array[1][1]);
-        let exp2 = new algebra.Expression(array[0][1]);
-        exp2 = exp2.multiply(array[1][0]);
-        return exp1.subtract(exp2);
+        return array[0][0].multiply(array[1][1]).subtract(array[0][1].multiply(array[1][0]));
     }
     let det = new algebra.Expression(0);
     for (let i = 0; i < array.length; i++){
@@ -78,12 +74,23 @@ export const determinantExpressionString = (array) =>
 export const determinantExpressionLatex = (array) =>
     algebra.toTex(determinantExpressionObject(array));
 
+export const convertArrayToObjectMatrix = (array) => {
+    // Convert array to algebra.Expression matrix
+    let matrix = [];
+    for (let i=0; i < array.length; i++){
+        matrix[i] = [];
+        for (let j=0; j < array.length; j++) {
+            matrix[i][j] = new algebra.Expression(array[i][j]);
+        }
+    }
+    return matrix;
+}
+
 export const characteristicPolynomialLatex = (array) => {
-    // Clone given array
-    let matrix = [...array];
-    // Add -l to the diagonal
+    let matrix = convertArrayToObjectMatrix(array);
+    // Subtract t from the diagonal
     for (let i=0; i < matrix.length; i++){
-        matrix[i][i] = 't';
+        matrix[i][i] = matrix[i][i].subtract('t');
     }
     return determinantExpressionLatex(matrix);
 }
