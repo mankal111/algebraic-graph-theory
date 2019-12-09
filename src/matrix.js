@@ -50,22 +50,12 @@ export const determinant = (array) => {
 // Returns the determinant expression which will be used
 // for the computation of the characterestic polynomial
 export const determinantExpressionObject = (array) => {
-    // Simplifies multiplication expression
-    const simplifyMulExp = (a, b) => {
-        // Compute multiplication if the operants are integers
-        if (Number.isInteger(a) && Number.isInteger(b)) return a*b;
-        // Return squared if the operants are the same symbol
-        else if (a === b) return `${a}^2`;
-        // Return multiplication string
-        else return `${a}*${b}`;
-    }
     if (array.length === 1) {
         // In 1X1 the determinant is the unique element
         return array[0][0];
     } else if (array.length === 2) {
         // In 2X2 the following is the determinant. We will use it as
         // the first step in this recursive method.
-        //return `${simplifyMulExp(array[0][0],array[1][1])}-${simplifyMulExp(array[0][1],array[1][0])}`;
         let exp1 = new algebra.Expression(array[0][0]);
         exp1 = exp1.multiply(array[1][1]);
         let exp2 = new algebra.Expression(array[0][1]);
