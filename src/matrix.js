@@ -79,7 +79,7 @@ export const determinantExpressionObject = (array) => {
         exp = exp.multiply(determinantExpressionObject(minorMatrix(array,0,i)));
         det = det.add(exp);
     }
-    return det.toString();
+    return det;
 }
 
 export const determinantExpressionString = (array) =>
