@@ -93,7 +93,8 @@ export const getRootsFromObject = (obj) => {
         // split the numbers
         .split(',')
         // and round them
-        .map(n => roundComplex(n));
+        .map(n => roundComplex(n))
+        .sort();
 }
 
 export const characteristicPolynomialObject = (array) => {

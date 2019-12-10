@@ -21,12 +21,12 @@ it('returns the minor matrix', () => {
 it('returns the characteristic polynomial and spectrum latex of an array', () => {
     const charAndSpec = charAndSpecLatex([[0,1,1],[1,0,1],[1,1,0]]);
     expect(charAndSpec.characteristicPolynomial).toEqual("\\chi(\\Gamma ; \\lambda)=-\\lambda^{3} + 3\\lambda + 2");
-    expect(charAndSpec.spectrum).toEqual("Spec\\ \\Gamma=\\begin{pmatrix}2&-1\\\\1&2\\end{pmatrix}");
+    expect(charAndSpec.spectrum).toEqual("Spec\\ \\Gamma=\\begin{pmatrix}-1&2\\\\2&1\\end{pmatrix}");
 });
 
 it('returns the eigenvalues of an array', () => {
     expect(getRootsFromObject(characteristicPolynomialObject([[0,1],[1,0]]))).toEqual([-1,1]);
-    expect(getRootsFromObject(characteristicPolynomialObject([[0,1,1],[1,0,1],[1,1,0]]))).toEqual([2,-1,-1]);
+    expect(getRootsFromObject(characteristicPolynomialObject([[0,1,1],[1,0,1],[1,1,0]]))).toEqual([-1,-1,2]);
 });
 
 it('rounds complex', () => {
