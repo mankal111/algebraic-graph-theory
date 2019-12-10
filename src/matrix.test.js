@@ -1,5 +1,5 @@
 import { arrayToLatexMatrix, zeros, adjacencyMatrix, characteristicPolynomialLatex,
-    spectrumMatrixLatex, minorMatrix, getEigenvalues, roundComplex } from './matrix';
+    spectrumMatrixLatex, minorMatrix, getEigenvalues, roundComplex, determinantExpression } from './matrix';
 
 it('converts array to latex matrix', () => {
     expect(arrayToLatexMatrix([[1, 2],[3, 4]])).toEqual("\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}");

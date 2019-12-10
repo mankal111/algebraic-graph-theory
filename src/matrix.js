@@ -1,5 +1,4 @@
 import algebra from 'algebra.js';
-import { get } from 'https';
 const Algebrite = require('algebrite');
 
 export const arrayToLatexMatrix = (array) =>
@@ -40,10 +39,12 @@ export const determinantExpressionObject = (array) => {
     }
     let det = new algebra.Expression(0);
     for (let i = 0; i < array.length; i++){
-        let exp = new algebra.Expression(Math.pow(-1, i));
-        exp = exp.multiply(array[0][i]);
-        exp = exp.multiply(determinantExpressionObject(minorMatrix(array,0,i)));
-        det = det.add(exp);
+        if (array[0][i].toString() !== '0') {
+            let exp = new algebra.Expression(Math.pow(-1, i));
+            exp = exp.multiply(array[0][i]);
+            exp = exp.multiply(determinantExpressionObject(minorMatrix(array,0,i)));
+            det = det.add(exp);
+        }
     }
     return det;
 }
