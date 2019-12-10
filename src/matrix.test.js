@@ -2,7 +2,7 @@ import { arrayToLatexMatrix, zeros, adjacencyMatrix, charAndSpecLatex,
     minorMatrix, roundComplex, getRootsFromObject, characteristicPolynomialObject } from './matrix';
 
 it('converts array to latex matrix', () => {
-    expect(arrayToLatexMatrix([[1, 2],[3, 4]])).toEqual("\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}");
+    expect(arrayToLatexMatrix([[1, 2],[3, 4]])).toEqual("A(\\Gamma)=\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}");
 });
 
 it('returns array of zeros', () => {
@@ -20,13 +20,13 @@ it('returns the minor matrix', () => {
 
 it('returns the characteristic polynomial and spectrum latex of an array', () => {
     const charAndSpec = charAndSpecLatex([[0,1,1],[1,0,1],[1,1,0]]);
-    expect(charAndSpec.characteristicPolynomial).toEqual("-t^{3} + 3t + 2");
-    expect(charAndSpec.spectrum).toEqual("\\begin{bmatrix}2&-1\\\\1&2\\end{bmatrix}");
+    expect(charAndSpec.characteristicPolynomial).toEqual("\\chi(\\Gamma ; \\lambda)=-\\lambda^{3} + 3\\lambda + 2");
+    expect(charAndSpec.spectrum).toEqual("Spec\\ \\Gamma=\\begin{pmatrix}-1&2\\\\2&1\\end{pmatrix}");
 });
 
 it('returns the eigenvalues of an array', () => {
     expect(getRootsFromObject(characteristicPolynomialObject([[0,1],[1,0]]))).toEqual([-1,1]);
-    expect(getRootsFromObject(characteristicPolynomialObject([[0,1,1],[1,0,1],[1,1,0]]))).toEqual([2,-1,-1]);
+    expect(getRootsFromObject(characteristicPolynomialObject([[0,1,1],[1,0,1],[1,1,0]]))).toEqual([-1,-1,2]);
 });
 
 it('rounds complex', () => {

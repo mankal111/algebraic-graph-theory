@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import VESetsCard from './VESetsCard';
 import AdjacencyMatrixCard from './AdjacencyMatrixCard';
+import CharPolAndSpecCard from './CharPolAndSpecCard';
 
 class GraphDataPanel extends Component {
     shouldComponentUpdate(nextProps){
@@ -16,6 +17,7 @@ class GraphDataPanel extends Component {
             <div>
                 <VESetsCard vertices={vertices} edges={edges} />
                 <AdjacencyMatrixCard vertices={vertices} edges={edges} />
+                <CharPolAndSpecCard vertices={vertices} edges={edges} />
             </div>
         );
     }
