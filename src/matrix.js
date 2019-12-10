@@ -2,7 +2,7 @@ import algebra from 'algebra.js';
 const Algebrite = require('algebrite');
 
 export const arrayToLatexMatrix = (array) =>
-    `\\begin{bmatrix}${array.map(row => row.join('&')).join('\\\\')}\\end{bmatrix}`;
+    `A(\\Gamma)=\\begin{bmatrix}${array.map(row => row.join('&')).join('\\\\')}\\end{bmatrix}`;
 
 export const zeros = (h, w) =>
     Array(h).fill().map(() => Array(w).fill(0));
@@ -110,15 +110,19 @@ export const spectrumMatrixLatex = (charObj) => {
     const spectrum = [...new Set(eigenvalues)].map(
         x => [x, eigenvalues.filter(y => y === x).length]
       );
-    return `\\begin{bmatrix}${spectrum.map(row => row[0]).join('&')}\\\\${spectrum.map(row => row[1]).join('&')}\\end{bmatrix}`;
+    return `Spec\\ \\Gamma=\\begin{pmatrix}${spectrum.map(row => row[0]).join('&')}\\\\${spectrum.map(row => row[1]).join('&')}\\end{pmatrix}`;
 }
 
 // since the computation of the characteristic polynomial is very complex, this function
 // will return characteristic polynomial and spectrum at the same time
 export const charAndSpecLatex = (array) => {
+    if (array.length === 0) return {
+        characteristicPolynomial: '\\chi(\\Gamma ; \\lambda)=0',
+        spectrum: 'Spec\\ \\Gamma=\\begin{pmatrix}\\\\\\end{pmatrix}'
+    };
     const charPolObj = characteristicPolynomialObject(array);
     return {
-        characteristicPolynomial: algebra.toTex(charPolObj),
+        characteristicPolynomial: `\\chi(\\Gamma ; \\lambda)=${algebra.toTex(charPolObj).replace(/t/g, '\\lambda')}`,
         spectrum: spectrumMatrixLatex(charPolObj)
     }
 }
