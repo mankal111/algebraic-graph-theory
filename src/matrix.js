@@ -84,9 +84,9 @@ export const roundComplex = n => {
     return roundToTwoD(n);
 }
 
-export const getEigenvalues = (array) => {
+export const getRootsFromObject = (obj) => {
     // Get the roots of the polynomial
-    return Algebrite.run(`nroots(${characteristicPolynomialObject(array).toString()})`)
+    return Algebrite.run(`nroots(${obj.toString()})`)
         .toString()
         // remove '[', ']' and '...'
         .replace(/(\[|\]|\.\.\.)/g, '')
@@ -105,14 +105,20 @@ export const characteristicPolynomialObject = (array) => {
     return determinantExpressionObject(matrix);
 }
 
-export const characteristicPolynomialLatex = (array) => {
-    return algebra.toTex(characteristicPolynomialObject(array));
-}
-
-export const spectrumMatrixLatex = (array) => {
-    const eigenvalues = getEigenvalues(array);
+export const spectrumMatrixLatex = (charObj) => {
+    const eigenvalues = getRootsFromObject(charObj);
     const spectrum = [...new Set(eigenvalues)].map(
         x => [x, eigenvalues.filter(y => y === x).length]
       );
     return `\\begin{bmatrix}${spectrum.map(row => row[0]).join('&')}\\\\${spectrum.map(row => row[1]).join('&')}\\end{bmatrix}`;
+}
+
+// since the computation of the characteristic polynomial is very complex, this function
+// will return characteristic polynomial and spectrum at the same time
+export const charAndSpecLatex = (array) => {
+    const charPolObj = characteristicPolynomialObject(array);
+    return {
+        characteristicPolynomial: algebra.toTex(charPolObj),
+        spectrum: spectrumMatrixLatex(charPolObj)
+    }
 }
