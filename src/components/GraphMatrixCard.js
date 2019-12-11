@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import 'katex/dist/katex.min.css';
 import { InlineMath } from "react-katex";
-import { Card, Collapse } from 'react-bootstrap';
+import { Card, Collapse, Alert } from 'react-bootstrap';
 import { arrayToLatexMatrix, adjacencyMatrix } from '../matrix';
 
 export default function GraphMatrixCard({ vertices, edges }){
@@ -19,7 +19,11 @@ export default function GraphMatrixCard({ vertices, edges }){
             </Card.Header>
             <Collapse in={open}>
                 <Card.Body id="GraphMatrix">
-                <InlineMath math={latexAdjMatrix}/>
+                {
+                    (vertices.length < 14) ?
+                    (<InlineMath math={latexAdjMatrix}/>) :
+                    (<Alert variant={'warning'}>The matrix is too big to show it here.<br/> But you can still download it.</Alert>)
+                }
                 </Card.Body>
             </Collapse>
         </Card>
