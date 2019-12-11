@@ -7,20 +7,26 @@ class Vertex extends Component {
         super(...args);
         this.handleClick = this.handleClick.bind(this);
         this.onDrag = this.onDrag.bind(this);
+        this.leftClick = this.leftClick.bind(this);
         // used throttle to prevent too many updates
         this.delayedUpdateVertex = throttle((i,x,y) => this.props.updateVertex(i,x,y), 50);
     }
 
-    handleClick(e){
-        e.cancelBubble = true;
-        const {index, selectedVertex, selectVertex, deleteVertex, addEdge} = this.props;
-        if (e.evt.button === 0) {
-            if (index === selectedVertex)
+    leftClick(){
+        const {index, selectedVertex, selectVertex, addEdge} = this.props;
+        if (index === selectedVertex)
                 selectVertex(null);
             else if (selectedVertex !== null)
                 addEdge(selectedVertex, index);
             else
                 selectVertex(index);
+    }
+
+    handleClick(e){
+        e.cancelBubble = true;
+        const {index, deleteVertex} = this.props;
+        if (e.evt.button === 0) {
+            this.leftClick(e);
         } else if (e.evt.button === 2) {
             deleteVertex(index);
         }
@@ -50,6 +56,7 @@ class Vertex extends Component {
                     stroke={isSelected ? 'LimeGreen' : 'black'}
                     strokeWidth={isSelected ? 4 : 1}
                     onClick={this.handleClick}
+                    onTouchStart={this.leftClick}
                     draggable={true}
                     shadowColor={'black'}
                     shadowBlur={isSelected ? 4 : 2}
