@@ -5,10 +5,19 @@ import { Card, Collapse } from 'react-bootstrap';
 import { charAndSpecLatex, adjacencyMatrix } from '../matrix';
 
 export default function CharPolAndSpecCard({ vertices, edges }){
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     // Create the latex text that describes the adjacencyMatrix
     let adjMatrix = adjacencyMatrix(vertices.length, edges);
-    let { characteristicPolynomial, spectrum } = charAndSpecLatex(adjMatrix);
+    let charAndSpecLatexObj = {};
+    if (edges.length<20){
+        charAndSpecLatexObj = charAndSpecLatex(adjMatrix);
+    } else {
+        charAndSpecLatexObj = {
+            characteristicPolynomial: '\\text{I will not try to compute the characteristic polynomial.}',
+            spectrum: '\\text{The computation would take long time in your browser.}'
+        };
+    }
+    let {characteristicPolynomial, spectrum} = charAndSpecLatexObj;
     return (
         <Card>
             <Card.Header

@@ -4,7 +4,7 @@ import {InlineMath} from "react-katex";
 import { Card, Collapse } from 'react-bootstrap';
 
 export default function VESetsCard({ vertices, edges }){
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
 
     return (
         <Card>
