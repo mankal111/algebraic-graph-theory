@@ -4,7 +4,7 @@ import { InlineMath } from "react-katex";
 import { Card, Collapse } from 'react-bootstrap';
 import { arrayToLatexMatrix, adjacencyMatrix } from '../matrix';
 
-export default function AdjacencyMatrixCard({ vertices, edges }){
+export default function GraphMatrixCard({ vertices, edges }){
     const [open, setOpen] = useState(true);
     // Create the latex text that describes the adjacencyMatrix
     let latexAdjMatrix = arrayToLatexMatrix(adjacencyMatrix(vertices.length, edges));
@@ -12,13 +12,13 @@ export default function AdjacencyMatrixCard({ vertices, edges }){
         <Card>
             <Card.Header
                 onClick={() => setOpen(!open)}
-                aria-controls="AdjMatrix"
+                aria-controls="GraphMatrix"
                 aria-expanded={open}
             >
-                Adjacency Matrix
+                Graph Matrix
             </Card.Header>
             <Collapse in={open}>
-                <Card.Body id="AdjMatrix">
+                <Card.Body id="GraphMatrix">
                 <InlineMath math={latexAdjMatrix}/>
                 </Card.Body>
             </Collapse>

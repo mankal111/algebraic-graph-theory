@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import VESetsCard from './VESetsCard';
-import AdjacencyMatrixCard from './AdjacencyMatrixCard';
+import GraphMatrixCard from './GraphMatrixCard';
 import CharPolAndSpecCard from './CharPolAndSpecCard';
 import CreateGraphCard from './CreateGraphCard'
 
@@ -18,7 +18,7 @@ class GraphDataPanel extends Component {
             <div>
                 <CreateGraphCard />
                 <VESetsCard vertices={vertices} edges={edges} />
-                <AdjacencyMatrixCard vertices={vertices} edges={edges} />
+                <GraphMatrixCard vertices={vertices} edges={edges} />
                 <CharPolAndSpecCard vertices={vertices} edges={edges} />
             </div>
         );
