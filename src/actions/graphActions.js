@@ -43,3 +43,11 @@ export const deleteEdge = (index) => dispatch => {
         index
     });
 }
+
+export const initializeGraph = (vertices, edges) => dispatch => {
+    dispatch({
+        type: 'INITIALIZE_GRAPH',
+        vertices,
+        edges
+    });
+}
