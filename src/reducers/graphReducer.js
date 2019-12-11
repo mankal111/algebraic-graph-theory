@@ -80,6 +80,12 @@ export default (state = initialState, action) => {
                         edges.filter((v, i) => i !== index)
                 }
             }
+        case 'INITIALIZE_GRAPH':
+            return {
+                ...state,
+                vertices: action.vertices,
+                edges: action.edges
+            }
         default:
             return state
     }
