@@ -2,7 +2,7 @@ import algebra from 'algebra.js';
 const Algebrite = require('algebrite');
 
 export const arrayToLatexMatrix = (array) =>
-    `A(\\Gamma)=\\begin{bmatrix}${array.map(row => row.join('&')).join('\\\\')}\\end{bmatrix}`;
+    `\\begin{bmatrix}${array.map(row => row.join('&')).join('\\\\')}\\end{bmatrix}`;
 
 export const zeros = (h, w) =>
     Array(h).fill().map(() => Array(w).fill(0));
@@ -16,6 +16,30 @@ export const adjacencyMatrix = (numberOfVertices, arrayOfEdges) => {
         matrix[arrayOfEdges[i][1]][arrayOfEdges[i][0]] = 1;
     }
     return matrix;
+}
+
+export const degreeMatrix = (numberOfVertices, arrayOfEdges) => {
+    // Create a new matrix with zeros
+    let matrix = zeros(numberOfVertices, numberOfVertices);
+    // Put 1 in the diagonal for each vertex of every edge
+    for (let i=0; i < arrayOfEdges.length; i++) {
+        matrix[arrayOfEdges[i][0]][arrayOfEdges[i][0]] += 1;
+        matrix[arrayOfEdges[i][1]][arrayOfEdges[i][1]] += 1;
+    }
+    return matrix;
+}
+
+export const laplacianMatrix = (numberOfVertices, arrayOfEdges) => {
+    const adj = adjacencyMatrix(numberOfVertices, arrayOfEdges);
+    const deg = degreeMatrix(numberOfVertices, arrayOfEdges);
+    let laplacianMatrix = [];
+    for (let i = 0; i < numberOfVertices; i++) {
+        laplacianMatrix[i] = [];
+        for (let j = 0; j < numberOfVertices; j++) {
+            laplacianMatrix[i][j] = deg[i][j] - adj[i][j];
+        }
+    }
+    return laplacianMatrix;
 }
 
 export const minorMatrix = (array, i, j) => {
