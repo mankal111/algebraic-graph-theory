@@ -9,6 +9,7 @@ class CreateGraphCard extends Component {
         this.deleteGraph = this.deleteGraph.bind(this);
         this.cycleGraph = this.cycleGraph.bind(this);
         this.completeGraph = this.completeGraph.bind(this);
+        this.margulisExpander = this.margulisExpander.bind(this);
     }
 
     deleteGraph() {
@@ -36,7 +37,7 @@ class CreateGraphCard extends Component {
         const center = [window.innerWidth/4, window.innerHeight/3];
         const radius = window.innerWidth/9;
         let numberOfVertices = Number.parseInt(prompt("Please enter the number of vertices", 5));
-        if (!Number.isInteger(numberOfVertices)) numberOfVertices = 5;
+        if (!Number.isInteger(numberOfVertices)) return;
         let vertices = [];
         let edges = [];
         for (let i = 0; i < numberOfVertices; i++){
@@ -50,7 +51,30 @@ class CreateGraphCard extends Component {
                 if (i !== j) edges.push([i,j]);
             }
         }
-        this.props.initializeGraph(vertices,edges)
+        this.props.initializeGraph(vertices,edges);
+    }
+
+    margulisExpander() {
+        const first = [window.innerWidth/10, window.innerHeight/10];
+        let m = Number.parseInt(prompt("Please enter a positive number m", 3));
+        const space = window.innerWidth/(3.5*m);
+        if (!Number.isInteger(m) && m > 1) return;
+        let vertices = [];
+        let edges = [];
+        const toIndex = (x,y) => x*m+y;
+        for (let i = 0; i < m; i++) {
+            for (let j = 0; j < m; j++){
+                vertices.push([
+                    first[0] + space * i + ((Math.pow(j-m/2,2)+j) * 30/m),
+                    first[1] + space * j + ((Math.pow(i-m/2,2)+i) * 30/m)
+                ]);
+                edges.push([toIndex(i,j),toIndex(i,(j+1)%m)]);
+                edges.push([toIndex(i,j),toIndex((i+1)%m,j)]);
+                edges.push([toIndex(i,j),toIndex(i,(i+j)%m)]);
+                edges.push([toIndex(i,j),toIndex(m-j-1, i)]);
+            }
+        }
+        this.props.initializeGraph(vertices,edges);
     }
 
     render() {
@@ -64,6 +88,7 @@ class CreateGraphCard extends Component {
                     <Dropdown.Item onSelect={this.deleteGraph}>New</Dropdown.Item>
                     <Dropdown.Item onSelect={this.cycleGraph}>Cycle Graph</Dropdown.Item>
                     <Dropdown.Item onSelect={this.completeGraph}>Complete Graph</Dropdown.Item>
+                    <Dropdown.Item onSelect={this.margulisExpander}>Margulis expander</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
         )
