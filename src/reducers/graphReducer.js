@@ -84,7 +84,8 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 vertices: action.vertices,
-                edges: action.edges
+                edges: action.edges,
+                selectedVertex: null
             }
         default:
             return state
