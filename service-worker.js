@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/algebraic-graph-theory/precache-manifest.57c3f95afe754fcd5b4b87e25922650d.js"
+  "/algebraic-graph-theory/precache-manifest.b470fe8b2589c35556a712cafc0619fe.js"
 );
 
 self.addEventListener('message', (event) => {
