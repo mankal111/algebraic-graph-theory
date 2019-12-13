@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Layer, Stage } from 'react-konva';
+import { throttle } from 'lodash';
 import Vertex from './Vertex';
 import Edge from './Edge';
 import { connect } from 'react-redux';
 import { addVertex, deleteVertex, selectVertex, updateVertex, addEdge,
-    deleteEdge, moveCanvas } from '../actions/graphActions';
+    deleteEdge, moveCanvas, zoomCanvas } from '../actions/graphActions';
 
 class GraphCanvas extends Component {
     constructor(props) {
@@ -16,6 +17,9 @@ class GraphCanvas extends Component {
         this.handleClick = this.handleClick.bind(this);
         this.startDrag = this.startDrag.bind(this);
         this.endDrag = this.endDrag.bind(this);
+        this.wheelListener = this.wheelListener.bind(this);
+        // used throttle to call zoomCanvas only once every 1/10 second
+        this.delayedZoomCanvas = throttle((x, y, zoom) => this.props.zoomCanvas(x, y, zoom), 100);
     }
 
     handleClick(e) {
@@ -45,17 +49,28 @@ class GraphCanvas extends Component {
         this.props.moveCanvas(dx, dy);
     }
 
+     wheelListener(e) {
+        const {x, y} = this.refs.stage.getPointerPosition();
+        e.evt.preventDefault();
+        // Zoom in or out by steps of 0.1
+        if (e.evt.deltaY > 0)
+            this.delayedZoomCanvas(x, y, 1.1);
+        else if (e.evt.deltaY < 0)
+            this.delayedZoomCanvas(x, y, 0.9);
+     }
+
     render() {
         const { vertices, edges, selectedVertex, deleteVertex,
             selectVertex, addEdge, deleteEdge, updateVertex, canvasPosition } = this.props;
         return (
-            <Stage 
+            <Stage
                 width={window.innerWidth}
                 height={window.innerHeight}
                 onClick={this.handleClick}
                 draggable
                 onDragStart={this.startDrag}
                 onDragEnd={this.endDrag}
+                onWheel={this.wheelListener}
                 x={canvasPosition[0]} y={canvasPosition[1]}
                 ref="stage"
                 // Prevent context menu since we are using right click for deselecting and deleting
@@ -107,7 +122,8 @@ const mapDispatchToProps = dispatch => ({
     addEdge: (v1, v2) => dispatch(addEdge(v1, v2)),
     deleteEdge: index => dispatch(deleteEdge(index)),
     updateVertex: (index, x, y) => dispatch(updateVertex(index, x, y)),
-    moveCanvas: (dx, dy) => dispatch(moveCanvas(dx, dy))
+    moveCanvas: (dx, dy) => dispatch(moveCanvas(dx, dy)),
+    zoomCanvas: (x, y, zoom) => dispatch(zoomCanvas(x, y, zoom))
 });
   
 export default connect(mapStateToProps, mapDispatchToProps) (GraphCanvas);

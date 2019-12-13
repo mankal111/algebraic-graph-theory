@@ -60,3 +60,11 @@ export const moveCanvas = (dx, dy) => dispatch => {
     });
 }
 
+export const zoomCanvas = (x, y, zoom) => dispatch => {
+    dispatch({
+        type: 'ZOOM_CANVAS',
+        x,
+        y,
+        zoom
+    });
+}

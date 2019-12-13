@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { initializeGraph, moveCanvas } from '../actions/graphActions';
+import { initializeGraph, moveCanvas, zoomCanvas } from '../actions/graphActions';
 import { Dropdown, ButtonGroup, Button, Row } from 'react-bootstrap';
 
 class CreateGraphCard extends Component {
@@ -14,6 +14,16 @@ class CreateGraphCard extends Component {
         this.moveDown = () => this.props.moveCanvas(0, -50);
         this.moveLeft = () => this.props.moveCanvas(50, 0);
         this.moveRight = () => this.props.moveCanvas(-50, 0);
+        this.zoomIn = () => this.props.zoomCanvas(
+            window.innerWidth/2,
+            window.innerHeight/2,
+            1.5
+        );
+        this.zoomOut = () => this.props.zoomCanvas(
+            window.innerWidth/2,
+            window.innerHeight/2,
+            0.75
+        );
     }
 
     deleteGraph() {
@@ -89,6 +99,8 @@ class CreateGraphCard extends Component {
                     <Button variant="secondary" onClick={this.moveUp}>Up</Button>
                     <Button variant="secondary" onClick={this.moveDown}>Down</Button>
                     <Button variant="secondary" onClick={this.moveRight}>Right</Button>
+                    <Button variant="secondary" onClick={this.zoomIn}>Zoom in</Button>
+                    <Button variant="secondary" onClick={this.zoomOut}>Zoom out</Button>
                 </ButtonGroup>
                 <Dropdown>
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -113,7 +125,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     initializeGraph: (vertices, edges) => dispatch(initializeGraph(vertices, edges)),
-    moveCanvas: (dx, dy) => dispatch(moveCanvas(dx, dy))
+    moveCanvas: (dx, dy) => dispatch(moveCanvas(dx, dy)),
+    zoomCanvas: (x, y, zoom) => dispatch(zoomCanvas(x, y, zoom))
 });
   
 export default connect(mapStateToProps, mapDispatchToProps) (CreateGraphCard);
