@@ -10,6 +10,8 @@ class Vertex extends Component {
         this.leftClick = this.leftClick.bind(this);
         // used throttle to prevent too many updates
         this.delayedUpdateVertex = throttle((i,x,y) => this.props.updateVertex(i,x,y), 50);
+        // prevent this event from reaching stage
+        this.dragEnd = e => e.cancelBubble = true;
     }
 
     leftClick(){
@@ -63,6 +65,7 @@ class Vertex extends Component {
                     shadowOffset={isSelected ? {x: 2, y: 2 } : {x: 1, y: 1 }}
                     shadowOpacity={0.5}
                     onDragMove={this.onDrag}
+                    onDragEnd={this.dragEnd}
                     // Allow click 20 pixels around vertex
                     hitStrokeWidth={20}
                 />
