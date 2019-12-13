@@ -51,3 +51,12 @@ export const initializeGraph = (vertices, edges) => dispatch => {
         edges
     });
 }
+
+export const moveCanvas = (dx, dy) => dispatch => {
+    dispatch({
+        type: 'MOVE_CANVAS',
+        dx,
+        dy
+    });
+}
+

@@ -1,7 +1,8 @@
 const initialState = {
     vertices: [],
     edges: [],
-    selectedVertex: null
+    selectedVertex: null,
+    canvasPosition: [0, 0]
 }
 
 export default (state = initialState, action) => {
@@ -86,6 +87,15 @@ export default (state = initialState, action) => {
                 vertices: action.vertices,
                 edges: action.edges,
                 selectedVertex: null
+            }
+        case 'MOVE_CANVAS':
+            {
+                const {dx, dy} = action;
+                const [x, y] = state.canvasPosition;
+                return {
+                    ...state,
+                    canvasPosition: [x + dx, y + dy]
+                }
             }
         default:
             return state
