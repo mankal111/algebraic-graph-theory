@@ -8,6 +8,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import DownloadMatrixComponent from './DownloadMatrixComponent';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -24,17 +25,17 @@ export default function GraphRepresentation({ vertices, edges }){
 
     const [type, setType] = useState('Adjacency');
     // Create the latex text that describes the adjacencyMatrix
-    let latexMatrix;
+    let matrix;
     switch(type) {
         case 'Degree':
-            latexMatrix = arrayToLatexMatrix(degreeMatrix(vertices.length, edges));
+            matrix = degreeMatrix(vertices.length, edges);
             break;
         case 'Laplacian':
-            latexMatrix = arrayToLatexMatrix(laplacianMatrix(vertices.length, edges));
+            matrix = laplacianMatrix(vertices.length, edges);
             break;
         case 'Adjacency':
         default:
-            latexMatrix = arrayToLatexMatrix(adjacencyMatrix(vertices.length, edges));
+            matrix = adjacencyMatrix(vertices.length, edges);
     }
     return (
         <div className={classes.root}>
@@ -65,9 +66,12 @@ export default function GraphRepresentation({ vertices, edges }){
                 <Grid item className={classes.matrixContainer}>
                     {
                         (vertices.length < 14) ?
-                        (<InlineMath math={latexMatrix}/>) :
+                        (<InlineMath math={arrayToLatexMatrix(matrix)}/>) :
                         (<Alert variant={'warning'}>The matrix is too big to show it here.<br/> But you can still download it.</Alert>)
                     }
+                </Grid>
+                <Grid item>
+                    <DownloadMatrixComponent matrix={matrix} />
                 </Grid>
             </Grid>
         </div>
