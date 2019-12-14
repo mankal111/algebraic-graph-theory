@@ -4,12 +4,13 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import AppBar from '@material-ui/core/AppBar';
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import GraphCanvas from './components/GraphCanvas';
-import GraphDataPanel from './components/GraphDataPanel.js';
+import GraphDataPanel from './components/GraphDataPanel';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,10 +23,21 @@ const useStyles = makeStyles(theme => ({
     left: 0,
     right: 0,
   },
+  appBar: {
+    padding: '16px',
+  },
+  gridContainer: {
+    height: '100%',
+    paddingTop: '60px',
+  },
+  gridColumn: {
+    height: '100%',
+  },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
+    height: '100%',
   },
 }));
 
@@ -34,16 +46,18 @@ export default function App() {
 
   return (
     <Box className={classes.root}>
-      <Grid container spacing={3} justify="space-around" alignItems="stretch">
-        <Grid item xs={7}>
+      <AppBar className={classes.appBar}>
+        <Typography variant="h6">
+          Algebraic Graph Theory
+        </Typography>
+      </AppBar>
+      <Grid container className={classes.gridContainer} spacing={3} justify="space-around" alignItems="stretch">
+        <Grid className={classes.gridColumn} item xs={7}>
           <Paper className={classes.paper}>
-            <Typography component="h2" variant="h6" color="primary" gutterBottom>
-              Algebraic Graph Theory
-            </Typography>
             <GraphCanvas/>
           </Paper>
         </Grid>
-        <Grid item xs={5}>
+        <Grid className={classes.gridColumn} item xs={5}>
           <Paper className={classes.paper}>
             <GraphDataPanel />
           </Paper>
