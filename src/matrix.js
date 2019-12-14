@@ -2,7 +2,10 @@ import algebra from 'algebra.js';
 const Algebrite = require('algebrite');
 
 export const arrayToLatexMatrix = (array) =>
-    `\\begin{bmatrix}${array.map(row => row.join('&')).join('\\\\')}\\end{bmatrix}`;
+    arrayToTextMatrix(array, '\\begin{bmatrix}', '\\end{bmatrix}', '&', '\\\\');
+
+export const arrayToTextMatrix = (array, start, end, elSep, lineSep) =>
+    `${start}${array.map(row => row.join(elSep)).join(lineSep)}${end}`;
 
 export const zeros = (h, w) =>
     Array(h).fill().map(() => Array(w).fill(0));
