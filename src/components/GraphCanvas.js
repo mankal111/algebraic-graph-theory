@@ -64,6 +64,7 @@ class GraphCanvas extends Component {
             selectVertex, addEdge, deleteEdge, updateVertex, canvasPosition } = this.props;
         return (
             <Stage
+                style={{border: "solid 2px", width: "100%", height: "100%"}}
                 width={window.innerWidth}
                 height={window.innerHeight}
                 onClick={this.handleClick}
