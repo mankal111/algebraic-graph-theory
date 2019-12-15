@@ -1,8 +1,12 @@
-import { arrayToLatexMatrix, zeros, adjacencyMatrix, charAndSpecLatex,
+import { arrayToLatexMatrix, zeros, adjacencyMatrix, charAndSpecLatex, arrayToTextMatrix,
     minorMatrix, roundComplex, getRootsFromObject, characteristicPolynomialObject } from './matrix';
 
 it('converts array to latex matrix', () => {
-    expect(arrayToLatexMatrix([[1, 2],[3, 4]])).toEqual("A(\\Gamma)=\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}");
+    expect(arrayToLatexMatrix([[1, 2],[3, 4]])).toEqual("\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}");
+});
+
+it('converts array to space separated matrix', () => {
+    expect(arrayToTextMatrix([[1, 2],[3, 4]],'','',' ','\n')).toEqual("1 2\n3 4");
 });
 
 it('returns array of zeros', () => {

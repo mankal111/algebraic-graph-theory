@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import VESetsCard from './VESetsCard';
-import GraphMatrixCard from './GraphMatrixCard';
+import GraphRepresentation from './GraphRepresentation';
 import CharPolAndSpecCard from './CharPolAndSpecCard';
-import OptionsContainer from './OptionsContainer';
-
+import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 class GraphDataPanel extends Component {
     shouldComponentUpdate(nextProps){
         // The data in this component change only if a vertex or a edge is added or deleted.
@@ -16,9 +15,12 @@ class GraphDataPanel extends Component {
         const {vertices, edges} = this.props;
         return (
             <div>
-                <OptionsContainer />
-                <VESetsCard vertices={vertices} edges={edges} />
-                <GraphMatrixCard vertices={vertices} edges={edges} />
+                <Typography gutterBottom variant="h5">
+                    Graph representation
+                </Typography>
+                <Divider variant="middle" style={{margin: '16px'}} />
+                <GraphRepresentation vertices={vertices} edges={edges} />
+                <Divider variant="middle" style={{margin: '16px'}} />
                 <CharPolAndSpecCard vertices={vertices} edges={edges} />
             </div>
         );

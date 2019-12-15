@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { initializeGraph, moveCanvas, zoomCanvas } from '../actions/graphActions';
-import { Dropdown, ButtonGroup, Button, Row } from 'react-bootstrap';
+import { initializeGraph } from '../actions/graphActions';
+import { Dropdown } from 'react-bootstrap';
 
 class CreateGraphCard extends Component {
     constructor(...args) {
@@ -10,20 +10,6 @@ class CreateGraphCard extends Component {
         this.cycleGraph = this.cycleGraph.bind(this);
         this.completeGraph = this.completeGraph.bind(this);
         this.margulisExpander = this.margulisExpander.bind(this);
-        this.moveUp = () => this.props.moveCanvas(0, 50);
-        this.moveDown = () => this.props.moveCanvas(0, -50);
-        this.moveLeft = () => this.props.moveCanvas(50, 0);
-        this.moveRight = () => this.props.moveCanvas(-50, 0);
-        this.zoomIn = () => this.props.zoomCanvas(
-            window.innerWidth/2,
-            window.innerHeight/2,
-            1.5
-        );
-        this.zoomOut = () => this.props.zoomCanvas(
-            window.innerWidth/2,
-            window.innerHeight/2,
-            0.75
-        );
     }
 
     deleteGraph() {
@@ -93,28 +79,18 @@ class CreateGraphCard extends Component {
 
     render() {
         return (
-            <Row>
-                <ButtonGroup aria-label="Basic example">
-                    <Button variant="secondary" onClick={this.moveLeft}>Left</Button>
-                    <Button variant="secondary" onClick={this.moveUp}>Up</Button>
-                    <Button variant="secondary" onClick={this.moveDown}>Down</Button>
-                    <Button variant="secondary" onClick={this.moveRight}>Right</Button>
-                    <Button variant="secondary" onClick={this.zoomIn}>Zoom in</Button>
-                    <Button variant="secondary" onClick={this.zoomOut}>Zoom out</Button>
-                </ButtonGroup>
-                <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
-                        Create
-                    </Dropdown.Toggle>
+            <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    Create
+                </Dropdown.Toggle>
 
-                    <Dropdown.Menu>
-                        <Dropdown.Item onSelect={this.deleteGraph}>New</Dropdown.Item>
-                        <Dropdown.Item onSelect={this.cycleGraph}>Cycle Graph</Dropdown.Item>
-                        <Dropdown.Item onSelect={this.completeGraph}>Complete Graph</Dropdown.Item>
-                        <Dropdown.Item onSelect={this.margulisExpander}>Margulis expander</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-            </Row>
+                <Dropdown.Menu>
+                    <Dropdown.Item onSelect={this.deleteGraph}>New</Dropdown.Item>
+                    <Dropdown.Item onSelect={this.cycleGraph}>Cycle Graph</Dropdown.Item>
+                    <Dropdown.Item onSelect={this.completeGraph}>Complete Graph</Dropdown.Item>
+                    <Dropdown.Item onSelect={this.margulisExpander}>Margulis expander</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
         )
     }
 }
@@ -124,9 +100,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    initializeGraph: (vertices, edges) => dispatch(initializeGraph(vertices, edges)),
-    moveCanvas: (dx, dy) => dispatch(moveCanvas(dx, dy)),
-    zoomCanvas: (x, y, zoom) => dispatch(zoomCanvas(x, y, zoom))
+    initializeGraph: (vertices, edges) => dispatch(initializeGraph(vertices, edges))
 });
   
 export default connect(mapStateToProps, mapDispatchToProps) (CreateGraphCard);
