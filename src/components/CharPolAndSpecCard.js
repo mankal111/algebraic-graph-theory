@@ -1,11 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import 'katex/dist/katex.min.css';
 import { InlineMath } from "react-katex";
 import { Card, Collapse } from 'react-bootstrap';
 import { charAndSpecLatex, adjacencyMatrix } from '../matrix';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        width: '100%',
+        backgroundColor: theme.palette.background.paper,
+    },
+    latexContainer: {
+        margin: '16px',
+        width: '100%',
+        maxHeight: '250px',
+        overflow: 'auto',
+    },
+}))
 
 export default function CharPolAndSpecCard({ vertices, edges }){
-    const [open, setOpen] = useState(false);
+    const classes = useStyles();
     // Create the latex text that describes the adjacencyMatrix
     let adjMatrix = adjacencyMatrix(vertices.length, edges);
     let charAndSpecLatexObj = {};
@@ -19,21 +35,19 @@ export default function CharPolAndSpecCard({ vertices, edges }){
     }
     let {characteristicPolynomial, spectrum} = charAndSpecLatexObj;
     return (
-        <Card>
-            <Card.Header
-                onClick={() => setOpen(!open)}
-                aria-controls="CPASC"
-                aria-expanded={open}
-            >
-                Characteristic polynomial and spectrum
-            </Card.Header>
-            <Collapse in={open}>
-                <Card.Body id="CPASC">
-                <InlineMath math={characteristicPolynomial}/>
-                <br/>
-                <InlineMath math={spectrum}/>
-                </Card.Body>
-            </Collapse>
-        </Card>
+        <div className={classes.root}>
+            <Grid container alignItems="center" direction="column">
+                <Grid item xs>
+                    <Typography gutterBottom variant="h6">
+                        Characteristic polynomial and spectrum
+                    </Typography>
+                </Grid>
+                <Grid item className={classes.latexContainer}>
+                    <InlineMath math={characteristicPolynomial}/>
+                    <br/>
+                    <InlineMath math={spectrum}/>
+                </Grid>
+            </Grid>
+        </div>
     );
 }

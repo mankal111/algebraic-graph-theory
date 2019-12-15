@@ -5,12 +5,14 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
+import ToolBar from '@material-ui/core/ToolBar';
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import GraphCanvas from './components/GraphCanvas';
 import GraphDataPanel from './components/GraphDataPanel';
+import OptionsContainer from './components/OptionsContainer';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,7 +26,10 @@ const useStyles = makeStyles(theme => ({
     right: 0,
   },
   appBar: {
-    padding: '16px',
+    flexGrow: 1,
+  },
+  title: {
+    flexGrow: 1,
   },
   gridContainer: {
     height: '100%',
@@ -38,6 +43,7 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
     height: '100%',
+    overflow: 'auto',
   },
 }));
 
@@ -47,9 +53,12 @@ export default function App() {
   return (
     <Box className={classes.root}>
       <AppBar className={classes.appBar}>
-        <Typography variant="h6">
-          Algebraic Graph Theory
-        </Typography>
+        <ToolBar>
+          <Typography variant="h6" className={classes.title}>
+            Graph Playground
+          </Typography>
+          <OptionsContainer />
+        </ToolBar>
       </AppBar>
       <Grid container className={classes.gridContainer} spacing={3} justify="space-around" alignItems="stretch">
         <Grid className={classes.gridColumn} item xs={7}>

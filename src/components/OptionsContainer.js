@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { initializeGraph } from '../actions/graphActions';
-import { Dropdown, Row } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
 
 class CreateGraphCard extends Component {
     constructor(...args) {
@@ -79,20 +79,18 @@ class CreateGraphCard extends Component {
 
     render() {
         return (
-            <Row>
-                <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
-                        Create
-                    </Dropdown.Toggle>
+            <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    Create
+                </Dropdown.Toggle>
 
-                    <Dropdown.Menu>
-                        <Dropdown.Item onSelect={this.deleteGraph}>New</Dropdown.Item>
-                        <Dropdown.Item onSelect={this.cycleGraph}>Cycle Graph</Dropdown.Item>
-                        <Dropdown.Item onSelect={this.completeGraph}>Complete Graph</Dropdown.Item>
-                        <Dropdown.Item onSelect={this.margulisExpander}>Margulis expander</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-            </Row>
+                <Dropdown.Menu>
+                    <Dropdown.Item onSelect={this.deleteGraph}>New</Dropdown.Item>
+                    <Dropdown.Item onSelect={this.cycleGraph}>Cycle Graph</Dropdown.Item>
+                    <Dropdown.Item onSelect={this.completeGraph}>Complete Graph</Dropdown.Item>
+                    <Dropdown.Item onSelect={this.margulisExpander}>Margulis expander</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
         )
     }
 }

@@ -102,7 +102,7 @@ export default function CustomizedDialogs(props) {
             Copy text to clipboard
           </Button>
           <Button autoFocus onClick={handleClose} color="primary">
-            Save changes
+            Save matrix to file
           </Button>
         </DialogActions>
       </Dialog>

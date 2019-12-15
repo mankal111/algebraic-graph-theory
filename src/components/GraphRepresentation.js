@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import 'katex/dist/katex.min.css';
 import { InlineMath } from "react-katex";
-import { Alert } from 'react-bootstrap';
 import { arrayToLatexMatrix, adjacencyMatrix, degreeMatrix, laplacianMatrix } from '../matrix';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -17,6 +16,9 @@ const useStyles = makeStyles(theme => ({
     },
     matrixContainer: {
         margin: '16px',
+        width: '100%',
+        maxHeight: '250px',
+        overflow: 'auto',
     },
 }))
 
@@ -40,11 +42,6 @@ export default function GraphRepresentation({ vertices, edges }){
     return (
         <div className={classes.root}>
             <Grid container alignItems="center" direction="column">
-                <Grid item xs>
-                    <Typography gutterBottom variant="h5">
-                        Graph representation
-                    </Typography>
-                </Grid>
                 <Grid item>
                     <Grid container direction={'row'}>
                         <Grid item>
@@ -64,11 +61,7 @@ export default function GraphRepresentation({ vertices, edges }){
                     </Grid>
                 </Grid>
                 <Grid item className={classes.matrixContainer}>
-                    {
-                        (vertices.length < 14) ?
-                        (<InlineMath math={arrayToLatexMatrix(matrix)}/>) :
-                        (<Alert variant={'warning'}>The matrix is too big to show it here.<br/> But you can still download it.</Alert>)
-                    }
+                    <InlineMath math={arrayToLatexMatrix(matrix)}/>
                 </Grid>
                 <Grid item>
                     <DownloadMatrixComponent matrix={matrix} />
