@@ -9,6 +9,10 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import GetApp from '@material-ui/icons/GetApp';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import { arrayToTextMatrix } from '../matrix';
  
 const styles = theme => ({
@@ -54,6 +58,8 @@ const DialogActions = withStyles(theme => ({
 
 export default function CustomizedDialogs(props) {
   const [open, setOpen] = React.useState(false);
+  const [charSep, setCharSep] = React.useState('space');
+  const [newLines, setNewLines] = React.useState(true);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -91,6 +97,23 @@ export default function CustomizedDialogs(props) {
     }, 0);
   }
 
+  let matrixText;
+
+  switch (charSep) {
+    case 'space':
+      matrixText = arrayToTextMatrix(props.matrix,'','',' ',newLines ? '\n' : ' ');
+      break;
+    case 'cBraces':
+      matrixText = arrayToTextMatrix(props.matrix,'{{','}}',', ',`},${newLines ? '\n' : ''}{`);
+      break;
+    case 'sBrackets':
+      matrixText = arrayToTextMatrix(props.matrix,'[[',']]',', ',`],${newLines ? '\n' : ''}[`);
+      break;
+    case 'matlab':
+      matrixText = arrayToTextMatrix(props.matrix,'[',']',', ',`;${newLines ? '\n' : ' '}`);
+      break;
+  }
+
   return (
     <div>
       <Button
@@ -107,12 +130,28 @@ export default function CustomizedDialogs(props) {
           Download matrix
         </DialogTitle>
         <DialogContent dividers>
+            <Select
+                value={charSep}
+                onChange={e => setCharSep(e.target.value)}
+                labelId="matrix-representation-label"
+            >
+                <MenuItem value={'space'}>Space separated</MenuItem>
+                <MenuItem value={'cBraces'}>Curly braces {'{,}'}</MenuItem>
+                <MenuItem value={'sBrackets'}>Square brackets {'[,]'}</MenuItem>
+                <MenuItem value={'matlab'}>Matlab</MenuItem>
+            </Select>
+            <FormControlLabel
+              value={newLines}
+              control={<Checkbox checked={newLines} color="primary" onChange={e => setNewLines(e.target.checked)}/>}
+              label="New lines"
+              labelPlacement="start"
+            />
             <textarea
                 readOnly={true}
                 style={{width: '100%', height: '100%', whiteSpace: 'prewrap'}}
                 cols={props.matrix.length}
                 rows={props.matrix.length}
-                value={arrayToTextMatrix(props.matrix,'','',' ','\n')}
+                value={matrixText}
                 id={'matrixTextarea'}
             />
         </DialogContent>
