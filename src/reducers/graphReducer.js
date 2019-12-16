@@ -85,8 +85,7 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 vertices: action.vertices,
-                // Do not allow loops
-                edges: action.edges.filter(e => e[0] !== e[1]),
+                edges: action.edges,
                 selectedVertex: null,
                 canvasPosition: [0, 0]
             }

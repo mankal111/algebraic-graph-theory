@@ -30,7 +30,7 @@ class CreateGraphCard extends Component {
             ];
             edges[i] = [i, (i+1)%numberOfVertices];
         }
-        this.props.initializeGraph(vertices,edges)
+        this.props.initializeGraph(vertices,edges);
     }
 
     completeGraph() {
@@ -46,9 +46,10 @@ class CreateGraphCard extends Component {
                 center[1]+radius*Math.sin(2*Math.PI*i/numberOfVertices)
             ];
         }
+        // Fill edges with all possible non-oriented combinations
         for (let i = 0; i < numberOfVertices; i++){
-            for (let j = 0; j < numberOfVertices; j++){
-                if (i !== j) edges.push([i,j]);
+            for (let j = i + 1; j < numberOfVertices; j++){
+                edges.push([i,j]);
             }
         }
         this.props.initializeGraph(vertices,edges);
@@ -74,6 +75,8 @@ class CreateGraphCard extends Component {
                 edges.push([toIndex(i,j),toIndex(m-j-1, i)]);
             }
         }
+        // Remove loops
+        edges = edges.filter(e => e[0] !== e[1]);
         this.props.initializeGraph(vertices,edges);
     }
 
