@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   },
   gridContainer: {
     height: '100%',
-    paddingTop: '60px',
+    paddingTop: '66px',
   },
   gridColumn: {
     height: '100%',
