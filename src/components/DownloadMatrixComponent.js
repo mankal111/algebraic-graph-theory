@@ -67,9 +67,28 @@ export default function CustomizedDialogs(props) {
     const textArea = document.getElementById('matrixTextarea');
     // Select text
     textArea.select();
-  
     // Copy text
     document.execCommand("copy");
+  }
+
+  const download = () => {
+    // Get the textarea element
+    const textArea = document.getElementById('matrixTextarea');
+    // Create the blob
+    var file = new Blob([textArea.value], {type: 'text/plain'});
+    // Create an element that contains the link to the file
+    const a = document.createElement('a');
+    const url = URL.createObjectURL(file);
+    a.href = url;
+    a.download = 'matrix.txt';
+    document.body.appendChild(a);
+    // Trigger download
+    a.click();
+    // Remove the element
+    setTimeout(() => {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, 0);
   }
 
   return (
@@ -101,8 +120,8 @@ export default function CustomizedDialogs(props) {
           <Button autoFocus onClick={copyText} color="primary">
             Copy text to clipboard
           </Button>
-          <Button autoFocus onClick={handleClose} color="primary">
-            Save matrix to file
+          <Button autoFocus onClick={download} color="primary">
+            Save matrix to .txt file
           </Button>
         </DialogActions>
       </Dialog>
