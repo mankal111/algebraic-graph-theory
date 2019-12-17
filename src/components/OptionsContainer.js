@@ -75,9 +75,16 @@ class CreateGraphCard extends Component {
                 edges.push([toIndex(i,j),toIndex(m-j-1, i)]);
             }
         }
-        // Remove loops
-        edges = edges.filter(e => e[0] !== e[1]);
-        this.props.initializeGraph(vertices,edges);
+        // Remove loops and double edges
+        let normalizedEdges = [];
+        edges.forEach((edge) => {
+            if (!normalizedEdges.some(e =>
+                (e[0] === edge[0] && e[1] === edge[1]) ||
+                (e[0] === edge[1] && e[1] === edge[0]) ||
+                (edge[0] === edge[1])
+            )) normalizedEdges.push(edge);
+        });
+        this.props.initializeGraph(vertices,normalizedEdges);
     }
 
     render() {
