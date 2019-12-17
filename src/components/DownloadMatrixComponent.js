@@ -100,9 +100,6 @@ export default function CustomizedDialogs(props) {
   let matrixText;
 
   switch (charSep) {
-    case 'space':
-      matrixText = arrayToTextMatrix(props.matrix,'','',' ',newLines ? '\n' : ' ');
-      break;
     case 'cBraces':
       matrixText = arrayToTextMatrix(props.matrix,'{{','}}',', ',`},${newLines ? '\n' : ''}{`);
       break;
@@ -111,6 +108,14 @@ export default function CustomizedDialogs(props) {
       break;
     case 'matlab':
       matrixText = arrayToTextMatrix(props.matrix,'[',']',', ',`;${newLines ? '\n' : ' '}`);
+      break;
+    case 'latex':
+      matrixText = arrayToTextMatrix(props.matrix, '\\begin{bmatrix}', '\\end{bmatrix}',
+        '&', `\\\\${newLines ? '\n' : ' '}`);
+      break;
+    case 'space': 
+    default:
+      matrixText = arrayToTextMatrix(props.matrix,'','',' ',newLines ? '\n' : ' ');
       break;
   }
 
@@ -139,6 +144,7 @@ export default function CustomizedDialogs(props) {
                 <MenuItem value={'cBraces'}>Curly braces {'{,}'}</MenuItem>
                 <MenuItem value={'sBrackets'}>Square brackets {'[,]'}</MenuItem>
                 <MenuItem value={'matlab'}>Matlab</MenuItem>
+                <MenuItem value={'latex'}>LaTeX</MenuItem>
             </Select>
             <FormControlLabel
               value={newLines}
