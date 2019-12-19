@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -12,8 +12,11 @@ import GetApp from '@material-ui/icons/GetApp';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { arrayToTextMatrix } from '../matrix';
+import { arrayToTextMatrix, degreeMatrix, laplacianMatrix,
+  adjacencyMatrix, symNorLaplacianMatrix } from '../matrix';
  
 const styles = theme => ({
   root: {
@@ -58,8 +61,10 @@ const DialogActions = withStyles(theme => ({
 
 export default function CustomizedDialogs(props) {
   const [open, setOpen] = React.useState(false);
-  const [charSep, setCharSep] = React.useState('space');
+  const [format, setFormat] = React.useState('space');
+  const [expr, setExpr] = React.useState('approx');
   const [newLines, setNewLines] = React.useState(true);
+  const [repr, setRepr] = React.useState(props.representation);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -96,67 +101,110 @@ export default function CustomizedDialogs(props) {
       window.URL.revokeObjectURL(url);
     }, 0);
   }
-
+  const {numberOfVertices, edges} = props;
+  let matrix;
+  switch(repr) {
+      case 'Degree':
+          matrix = degreeMatrix(numberOfVertices, edges);
+          break;
+      case 'Laplacian':
+          matrix = laplacianMatrix(numberOfVertices, edges);
+          break;
+      case 'SNLaplacian':
+          matrix = symNorLaplacianMatrix(numberOfVertices, edges, expr);
+          break;
+      case 'Adjacency':
+      default:
+          matrix = adjacencyMatrix(numberOfVertices, edges);
+  }
+    
   let matrixText;
 
-  switch (charSep) {
+  switch (format) {
     case 'cBraces':
-      matrixText = arrayToTextMatrix(props.matrix,'{{','}}',', ',`},${newLines ? '\n' : ''}{`);
+      matrixText = arrayToTextMatrix(matrix,'{{','}}',', ',`},${newLines ? '\n' : ''}{`);
       break;
     case 'sBrackets':
-      matrixText = arrayToTextMatrix(props.matrix,'[[',']]',', ',`],${newLines ? '\n' : ''}[`);
+      matrixText = arrayToTextMatrix(matrix,'[[',']]',', ',`],${newLines ? '\n' : ''}[`);
       break;
     case 'matlab':
-      matrixText = arrayToTextMatrix(props.matrix,'[',']',', ',`;${newLines ? '\n' : ' '}`);
+      matrixText = arrayToTextMatrix(matrix,'[',']',', ',`;${newLines ? '\n' : ' '}`);
       break;
     case 'latex':
-      matrixText = arrayToTextMatrix(props.matrix, '\\begin{bmatrix}', '\\end{bmatrix}',
+      matrixText = arrayToTextMatrix(matrix, '\\begin{bmatrix}', '\\end{bmatrix}',
         '&', `\\\\${newLines ? '\n' : ' '}`);
       break;
     case 'space': 
     default:
-      matrixText = arrayToTextMatrix(props.matrix,'','',' ',newLines ? '\n' : ' ');
+      matrixText = arrayToTextMatrix(matrix,'','',' ',newLines ? '\n' : ' ');
       break;
   }
 
   return (
     <div>
       <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            onClick={handleClickOpen}
-            startIcon={<GetApp />}
-        >
-            Download matrix
-        </Button>
+        variant="contained"
+        color="primary"
+        size="small"
+        onClick={handleClickOpen}
+        startIcon={<GetApp />}
+      >
+        Download matrix
+      </Button>
       <Dialog fullScreen onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           Download matrix
         </DialogTitle>
         <DialogContent dividers>
+          <FormControl>
+            <InputLabel htmlFor="matrix-representation-label">Representation</InputLabel>
             <Select
-                value={charSep}
-                onChange={e => setCharSep(e.target.value)}
-                labelId="matrix-representation-label"
+              value={repr}
+              onChange={e => setRepr(e.target.value)}
+              labelId="matrix-representation-label"
             >
-                <MenuItem value={'space'}>Space separated</MenuItem>
-                <MenuItem value={'cBraces'}>Curly braces {'{,}'}</MenuItem>
-                <MenuItem value={'sBrackets'}>Square brackets {'[,]'}</MenuItem>
-                <MenuItem value={'matlab'}>Matlab</MenuItem>
-                <MenuItem value={'latex'}>LaTeX</MenuItem>
+              <MenuItem value={'Adjacency'}>Adjacency</MenuItem>
+              <MenuItem value={'Degree'}>Degree</MenuItem>
+              <MenuItem value={'Laplacian'}>Laplacian</MenuItem>
+              <MenuItem value={'SNLaplacian'}>Symmetric Normalized Laplacian</MenuItem>
             </Select>
+          </FormControl>
+          <FormControl>
+            <InputLabel htmlFor="matrix-format-label">Format</InputLabel>
+            <Select
+              value={format}
+              onChange={e => setFormat(e.target.value)}
+              labelId="matrix-format-label"
+            >
+              <MenuItem value={'space'}>Space separated</MenuItem>
+              <MenuItem value={'cBraces'}>Curly braces {'{,}'}</MenuItem>
+              <MenuItem value={'sBrackets'}>Square brackets {'[,]'}</MenuItem>
+              <MenuItem value={'matlab'}>Matlab</MenuItem>
+              <MenuItem value={'latex'}>LaTeX</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl>
+            <InputLabel htmlFor="expression-label">Expressions</InputLabel>
+            <Select
+              value={expr}
+              onChange={e => setExpr(e.target.value)}
+              labelId="expression-label"
+            >
+              <MenuItem value={'approx'}>Approximate</MenuItem>
+              <MenuItem value={'latex'}>LaTeX</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl>
             <FormControlLabel
               value={newLines}
               control={<Checkbox checked={newLines} color="primary" onChange={e => setNewLines(e.target.checked)}/>}
               label="New lines"
               labelPlacement="start"
             />
+          </FormControl>
             <textarea
                 readOnly={true}
                 style={{width: '100%', height: '100%', whiteSpace: 'prewrap'}}
-                cols={props.matrix.length}
-                rows={props.matrix.length}
                 value={matrixText}
                 id={'matrixTextarea'}
             />

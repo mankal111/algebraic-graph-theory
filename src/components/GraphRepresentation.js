@@ -80,7 +80,11 @@ export default function GraphRepresentation({ vertices, edges }){
                     <InlineMath math={arrayToLatexMatrix(matrix)}/>
                 </Grid>
                 <Grid item>
-                    <DownloadMatrixComponent matrix={matrix} />
+                    <DownloadMatrixComponent
+                        numberOfVertices={vertices.length}
+                        edges={edges}
+                        representation={type}
+                    />
                 </Grid>
             </Grid>
         </div>
