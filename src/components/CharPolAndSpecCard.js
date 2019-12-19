@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import 'katex/dist/katex.min.css';
 import { InlineMath } from "react-katex";
-import { Card, Collapse } from 'react-bootstrap';
 import { charAndSpecLatex, adjacencyMatrix } from '../matrix';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
