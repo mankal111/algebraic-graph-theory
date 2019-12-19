@@ -45,6 +45,63 @@ export const laplacianMatrix = (numberOfVertices, arrayOfEdges) => {
     return laplacianMatrix;
 }
 
+export const symNorLaplacianMatrix = (
+    numberOfVertices,
+    arrayOfEdges,
+    expressions = 'approximate'
+) => {
+    const adj = adjacencyMatrix(numberOfVertices, arrayOfEdges);
+    const deg = degreeMatrix(numberOfVertices, arrayOfEdges);
+    const simplifiedLatexSqrt = (n) => {
+        for (let i = Math.floor(Math.sqrt(n)); i >= 2; i--){
+            let r = n/(i*i);
+            if(Number.isInteger(r)){
+                return `${i}${(r !== 1) ? `\\sqrt{${n/(i*i)}}` : ''}`;
+            }
+        }
+    }
+    let SNLMatrix = [];
+    for (let i = 0; i < numberOfVertices; i++) {
+        SNLMatrix[i] = [];
+        for (let j = 0; j < numberOfVertices; j++) {
+            if (i === j) {
+                SNLMatrix[i][j] = 1;
+            } else {
+                switch (expressions){
+                    case 'latex':
+                        SNLMatrix[i][j] = (adj[i][j] !== 0) ?
+                            `\\frac{${-adj[i][j]}}{${simplifiedLatexSqrt(deg[i][i]*deg[j][j])}}` :
+                            0;
+                        break;
+                    case 'approximate':
+                    default:
+                        SNLMatrix[i][j] =
+                            Math.round(((-adj[i][j])/(Math.sqrt(deg[i][i]*deg[j][j]))) * 100) / 100;
+                } 
+            }
+        }
+    }
+    return SNLMatrix;
+}
+
+//Not used yet
+export const rWNorLaplacianMatrix = (numberOfVertices, arrayOfEdges) => {
+    const adj = adjacencyMatrix(numberOfVertices, arrayOfEdges);
+    const deg = degreeMatrix(numberOfVertices, arrayOfEdges);
+    let rWNLMatrix = [];
+    for (let i = 0; i < numberOfVertices; i++) {
+        rWNLMatrix[i] = [];
+        for (let j = 0; j < numberOfVertices; j++) {
+            if (i === j) {
+                rWNLMatrix[i][j] = 1;
+            } else {
+                rWNLMatrix[i][j] = Math.round(((-adj[i][j])/(deg[i][i])) * 100) / 100;
+            }
+        }
+    }
+    return rWNLMatrix;
+}
+
 export const minorMatrix = (array, i, j) => {
     return array
         // Get all the rows leaving out the ith

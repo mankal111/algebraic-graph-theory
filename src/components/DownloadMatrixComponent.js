@@ -162,7 +162,7 @@ export default function CustomizedDialogs(props) {
             />
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={copyText} color="primary">
+          <Button onClick={copyText} color="primary">
             Copy text to clipboard
           </Button>
           <Button autoFocus onClick={download} color="primary">
