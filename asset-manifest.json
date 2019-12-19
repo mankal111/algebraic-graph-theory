@@ -1,26 +1,26 @@
 {
   "files": {
     "main.css": "/algebraic-graph-theory/static/css/main.7d96267f.chunk.css",
-    "main.js": "/algebraic-graph-theory/static/js/main.b58c4974.chunk.js",
-    "main.js.map": "/algebraic-graph-theory/static/js/main.b58c4974.chunk.js.map",
+    "main.js": "/algebraic-graph-theory/static/js/main.bfab2b60.chunk.js",
+    "main.js.map": "/algebraic-graph-theory/static/js/main.bfab2b60.chunk.js.map",
     "runtime-main.js": "/algebraic-graph-theory/static/js/runtime-main.8ecbef0f.js",
     "runtime-main.js.map": "/algebraic-graph-theory/static/js/runtime-main.8ecbef0f.js.map",
     "static/css/2.adcbf3d3.chunk.css": "/algebraic-graph-theory/static/css/2.adcbf3d3.chunk.css",
-    "static/js/2.aa817fc6.chunk.js": "/algebraic-graph-theory/static/js/2.aa817fc6.chunk.js",
-    "static/js/2.aa817fc6.chunk.js.map": "/algebraic-graph-theory/static/js/2.aa817fc6.chunk.js.map",
+    "static/js/2.6d2acfa3.chunk.js": "/algebraic-graph-theory/static/js/2.6d2acfa3.chunk.js",
+    "static/js/2.6d2acfa3.chunk.js.map": "/algebraic-graph-theory/static/js/2.6d2acfa3.chunk.js.map",
     "index.html": "/algebraic-graph-theory/index.html",
-    "precache-manifest.b44c7caeef45975b1032707f7ccbf69f.js": "/algebraic-graph-theory/precache-manifest.b44c7caeef45975b1032707f7ccbf69f.js",
+    "precache-manifest.8d953ab0bd7532037c6814b48d43513d.js": "/algebraic-graph-theory/precache-manifest.8d953ab0bd7532037c6814b48d43513d.js",
     "service-worker.js": "/algebraic-graph-theory/service-worker.js",
     "static/css/2.adcbf3d3.chunk.css.map": "/algebraic-graph-theory/static/css/2.adcbf3d3.chunk.css.map",
     "static/css/main.7d96267f.chunk.css.map": "/algebraic-graph-theory/static/css/main.7d96267f.chunk.css.map",
-    "static/js/2.aa817fc6.chunk.js.LICENSE": "/algebraic-graph-theory/static/js/2.aa817fc6.chunk.js.LICENSE",
+    "static/js/2.6d2acfa3.chunk.js.LICENSE": "/algebraic-graph-theory/static/js/2.6d2acfa3.chunk.js.LICENSE",
     "static/media/katex.min.css": "/algebraic-graph-theory/static/media/KaTeX_Typewriter-Regular.f43e8696.woff2"
   },
   "entrypoints": [
     "static/js/runtime-main.8ecbef0f.js",
     "static/css/2.adcbf3d3.chunk.css",
-    "static/js/2.aa817fc6.chunk.js",
+    "static/js/2.6d2acfa3.chunk.js",
     "static/css/main.7d96267f.chunk.css",
-    "static/js/main.b58c4974.chunk.js"
+    "static/js/main.bfab2b60.chunk.js"
   ]
 }
