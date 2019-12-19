@@ -59,6 +59,7 @@ export const symNorLaplacianMatrix = (
                 return `${i}${(r !== 1) ? `\\sqrt{${n/(i*i)}}` : ''}`;
             }
         }
+        return `\\sqrt{${n}}`;
     }
     let SNLMatrix = [];
     for (let i = 0; i < numberOfVertices; i++) {
