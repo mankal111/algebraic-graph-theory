@@ -137,13 +137,19 @@ export const determinantExpressionObject = (array) => {
 export const determinantExpressionLatex = (array) =>
     algebra.toTex(determinantExpressionObject(array));
 
+const countDecimals = function (value) {
+    if(Math.floor(value) === value) return 0;
+    return value.toString().split(".")[1].length || 0; 
+}
 export const convertArrayToObjectMatrix = (array) => {
     // Convert array to algebra.Expression matrix
     let matrix = [];
     for (let i=0; i < array.length; i++){
         matrix[i] = [];
         for (let j=0; j < array.length; j++) {
-            matrix[i][j] = new algebra.Expression(array[i][j]);
+            const decimals = countDecimals(array[i][j]);
+            matrix[i][j] = new algebra.Expression(array[i][j]*(Math.pow(10, decimals)))
+                .divide(Math.pow(10, decimals));
         }
     }
     return matrix;
