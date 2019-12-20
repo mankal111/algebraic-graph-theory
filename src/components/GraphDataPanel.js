@@ -5,10 +5,23 @@ import CharPolAndSpectrum from './CharPolAndSpectrum';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 class GraphDataPanel extends Component {
-    shouldComponentUpdate(nextProps){
+    constructor(props){
+        super(props);
+        this.state = {
+            representation: 'Adjacency',
+        }
+        this.setRepresentation = this.setRepresentation.bind(this);
+    }
+
+    shouldComponentUpdate(nextProps, nextState){
         // The data in this component change only if a vertex or a edge is added or deleted.
         return nextProps.vertices.length !== this.props.vertices.length ||
-            nextProps.edges.length !== this.props.edges.length;
+            nextProps.edges.length !== this.props.edges.length ||
+            nextState.representation !== this.state.representation;
+    }
+
+    setRepresentation(r){
+        this.setState({representation: r});
     }
 
     render() {
@@ -19,7 +32,12 @@ class GraphDataPanel extends Component {
                     Graph representation
                 </Typography>
                 <Divider variant="middle" style={{margin: '16px'}} />
-                <GraphRepresentation vertices={vertices} edges={edges} />
+                <GraphRepresentation
+                    vertices={vertices}
+                    edges={edges}
+                    representation={this.state.representation}
+                    setRepresentation={this.setRepresentation}
+                />
                 <Divider variant="middle" style={{margin: '16px'}} />
                 <CharPolAndSpectrum vertices={vertices} edges={edges} />
             </div>

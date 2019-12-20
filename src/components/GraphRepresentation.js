@@ -34,13 +34,11 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-export default function GraphRepresentation({ vertices, edges }){
+export default function GraphRepresentation({ vertices, edges, representation, setRepresentation }){
     const classes = useStyles();
-
-    const [type, setType] = useState('Adjacency');
     // Create the latex text that describes the adjacencyMatrix
     let matrix;
-    switch(type) {
+    switch(representation) {
         case 'Degree':
             matrix = degreeMatrix(vertices.length, edges);
             break;
@@ -61,8 +59,8 @@ export default function GraphRepresentation({ vertices, edges }){
                     <Grid container direction={'row'}>
                         <Grid item>
                             <Select
-                                value={type}
-                                onChange={e => setType(e.target.value)}
+                                value={representation}
+                                onChange={e => setRepresentation(e.target.value)}
                                 labelId="matrix-representation-label"
                             >
                                 <MenuItem value={'Adjacency'}>Adjacency</MenuItem>
@@ -83,7 +81,7 @@ export default function GraphRepresentation({ vertices, edges }){
                     <DownloadMatrixComponent
                         numberOfVertices={vertices.length}
                         edges={edges}
-                        representation={type}
+                        representation={representation}
                     />
                 </Grid>
             </Grid>
