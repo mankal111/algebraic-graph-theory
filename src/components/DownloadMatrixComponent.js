@@ -15,6 +15,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Grid from '@material-ui/core/Grid';
 import { arrayToTextMatrix, degreeMatrix, laplacianMatrix,
   adjacencyMatrix, symNorLaplacianMatrix } from '../matrix';
  
@@ -156,52 +157,54 @@ export default function CustomizedDialogs(props) {
           Download matrix
         </DialogTitle>
         <DialogContent dividers>
-          <FormControl>
-            <InputLabel htmlFor="matrix-representation-label">Representation</InputLabel>
-            <Select
-              value={repr}
-              onChange={e => setRepr(e.target.value)}
-              labelId="matrix-representation-label"
-            >
-              <MenuItem value={'Adjacency'}>Adjacency</MenuItem>
-              <MenuItem value={'Degree'}>Degree</MenuItem>
-              <MenuItem value={'Laplacian'}>Laplacian</MenuItem>
-              <MenuItem value={'SNLaplacian'}>Symmetric Normalized Laplacian</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl>
-            <InputLabel htmlFor="matrix-format-label">Format</InputLabel>
-            <Select
-              value={format}
-              onChange={e => setFormat(e.target.value)}
-              labelId="matrix-format-label"
-            >
-              <MenuItem value={'space'}>Space separated</MenuItem>
-              <MenuItem value={'cBraces'}>Curly braces {'{,}'}</MenuItem>
-              <MenuItem value={'sBrackets'}>Square brackets {'[,]'}</MenuItem>
-              <MenuItem value={'matlab'}>Matlab</MenuItem>
-              <MenuItem value={'latex'}>LaTeX</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl>
-            <InputLabel htmlFor="expression-label">Expressions</InputLabel>
-            <Select
-              value={expr}
-              onChange={e => setExpr(e.target.value)}
-              labelId="expression-label"
-            >
-              <MenuItem value={'approx'}>Approximate</MenuItem>
-              <MenuItem value={'latex'}>LaTeX</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl>
-            <FormControlLabel
-              value={newLines}
-              control={<Checkbox checked={newLines} color="primary" onChange={e => setNewLines(e.target.checked)}/>}
-              label="New lines"
-              labelPlacement="start"
-            />
-          </FormControl>
+          <Grid container justify="space-around" style={{maxWidth: 600}}>
+            <FormControl>
+              <InputLabel htmlFor="matrix-representation-label">Representation</InputLabel>
+              <Select
+                value={repr}
+                onChange={e => setRepr(e.target.value)}
+                labelId="matrix-representation-label"
+              >
+                <MenuItem value={'Adjacency'}>Adjacency</MenuItem>
+                <MenuItem value={'Degree'}>Degree</MenuItem>
+                <MenuItem value={'Laplacian'}>Laplacian</MenuItem>
+                <MenuItem value={'SNLaplacian'}>Symmetric Normalized Laplacian</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl>
+              <InputLabel htmlFor="matrix-format-label">Format</InputLabel>
+              <Select
+                value={format}
+                onChange={e => setFormat(e.target.value)}
+                labelId="matrix-format-label"
+              >
+                <MenuItem value={'space'}>Space separated</MenuItem>
+                <MenuItem value={'cBraces'}>Curly braces {'{,}'}</MenuItem>
+                <MenuItem value={'sBrackets'}>Square brackets {'[,]'}</MenuItem>
+                <MenuItem value={'matlab'}>Matlab</MenuItem>
+                <MenuItem value={'latex'}>LaTeX</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl>
+              <InputLabel htmlFor="expression-label">Expressions</InputLabel>
+              <Select
+                value={expr}
+                onChange={e => setExpr(e.target.value)}
+                labelId="expression-label"
+              >
+                <MenuItem value={'approx'}>Approximate</MenuItem>
+                <MenuItem value={'latex'}>LaTeX</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl>
+              <FormControlLabel
+                value={newLines}
+                control={<Checkbox checked={newLines} color="primary" onChange={e => setNewLines(e.target.checked)}/>}
+                label="New lines"
+                labelPlacement="start"
+              />
+            </FormControl>
+          </Grid>
             <textarea
                 readOnly={true}
                 style={{width: '100%', height: '100%', whiteSpace: 'prewrap'}}
