@@ -34,24 +34,9 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-export default function GraphRepresentation({ vertices, edges, representation, setRepresentation }){
+export default function GraphRepresentation({ matrix, representation, setRepresentation }){
     const classes = useStyles();
-    // Create the latex text that describes the adjacencyMatrix
-    let matrix;
-    switch(representation) {
-        case 'Degree':
-            matrix = degreeMatrix(vertices.length, edges);
-            break;
-        case 'Laplacian':
-            matrix = laplacianMatrix(vertices.length, edges);
-            break;
-        case 'SNLaplacian':
-            matrix = symNorLaplacianMatrix(vertices.length, edges, 'latex');
-            break;
-        case 'Adjacency':
-        default:
-            matrix = adjacencyMatrix(vertices.length, edges);
-    }
+    
     return (
         <div className={classes.root}>
             <Grid container alignItems="center" direction="column">
@@ -79,8 +64,7 @@ export default function GraphRepresentation({ vertices, edges, representation, s
                 </Grid>
                 <Grid item>
                     <DownloadMatrixComponent
-                        numberOfVertices={vertices.length}
-                        edges={edges}
+                        matrix={matrix}
                         representation={representation}
                     />
                 </Grid>

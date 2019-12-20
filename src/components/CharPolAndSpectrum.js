@@ -19,13 +19,12 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-export default function CharPolAndSpectrum({ vertices, edges }){
+export default function CharPolAndSpectrum({ matrix }){
     const classes = useStyles();
-    // Create the latex text that describes the adjacencyMatrix
-    let adjMatrix = adjacencyMatrix(vertices.length, edges);
+
     let charAndSpecLatexObj = {};
-    if (edges.length<20){
-        charAndSpecLatexObj = charAndSpecLatex(adjMatrix);
+    if (matrix.length<20){
+        charAndSpecLatexObj = charAndSpecLatex(matrix);
     } else {
         charAndSpecLatexObj = {
             characteristicPolynomial: '\\text{I will not try to compute the characteristic polynomial.}',

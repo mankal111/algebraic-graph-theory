@@ -102,22 +102,7 @@ export default function CustomizedDialogs(props) {
       window.URL.revokeObjectURL(url);
     }, 0);
   }
-  const {numberOfVertices, edges} = props;
-  let matrix;
-  switch(repr) {
-      case 'Degree':
-          matrix = degreeMatrix(numberOfVertices, edges);
-          break;
-      case 'Laplacian':
-          matrix = laplacianMatrix(numberOfVertices, edges);
-          break;
-      case 'SNLaplacian':
-          matrix = symNorLaplacianMatrix(numberOfVertices, edges, expr);
-          break;
-      case 'Adjacency':
-      default:
-          matrix = adjacencyMatrix(numberOfVertices, edges);
-  }
+  const {matrix} = props;
     
   let matrixText;
 
