@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-export default function CharPolAndSpecCard({ vertices, edges }){
+export default function CharPolAndSpectrum({ vertices, edges }){
     const classes = useStyles();
     // Create the latex text that describes the adjacencyMatrix
     let adjMatrix = adjacencyMatrix(vertices.length, edges);
