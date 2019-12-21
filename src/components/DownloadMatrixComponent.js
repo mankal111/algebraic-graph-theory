@@ -16,8 +16,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
-import { arrayToTextMatrix, degreeMatrix, laplacianMatrix,
-  adjacencyMatrix, symNorLaplacianMatrix } from '../matrix';
+import { arrayToTextMatrix, getMatrixRepresentation } from '../matrix';
  
 const styles = theme => ({
   root: {
@@ -60,13 +59,11 @@ const DialogActions = withStyles(theme => ({
   },
 }))(MuiDialogActions);
 
-export default function CustomizedDialogs(props) {
+export default function CustomizedDialogs({verticesLength, edges, representation, setRepresentation}) {
   const [open, setOpen] = React.useState(false);
   const [format, setFormat] = React.useState('space');
   const [expr, setExpr] = React.useState('approx');
   const [newLines, setNewLines] = React.useState(true);
-  const [repr, setRepr] = React.useState(props.representation);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -102,8 +99,8 @@ export default function CustomizedDialogs(props) {
       window.URL.revokeObjectURL(url);
     }, 0);
   }
-  const {matrix} = props;
-    
+  const matrix = getMatrixRepresentation(verticesLength, edges, representation, expr);
+  
   let matrixText;
 
   switch (format) {
@@ -146,8 +143,8 @@ export default function CustomizedDialogs(props) {
             <FormControl>
               <InputLabel htmlFor="matrix-representation-label">Representation</InputLabel>
               <Select
-                value={repr}
-                onChange={e => setRepr(e.target.value)}
+                value={representation}
+                onChange={e => setRepresentation(e.target.value)}
                 labelId="matrix-representation-label"
               >
                 <MenuItem value={'Adjacency'}>Adjacency</MenuItem>

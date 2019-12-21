@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import 'katex/dist/katex.min.css';
 import { InlineMath } from "react-katex";
-import { charAndSpecLatex, adjacencyMatrix } from '../matrix';
+import { charAndSpecLatex, getMatrixRepresentation } from '../matrix';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -19,9 +19,9 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-export default function CharPolAndSpectrum({ matrix }){
+export default function CharPolAndSpectrum({ verticesLength, edges, representation }){
     const classes = useStyles();
-
+    const matrix = getMatrixRepresentation(verticesLength, edges, representation, 'approx');
     let charAndSpecLatexObj = {};
     if (matrix.length<20){
         charAndSpecLatexObj = charAndSpecLatex(matrix);

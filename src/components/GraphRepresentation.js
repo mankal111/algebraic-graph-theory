@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import 'katex/dist/katex.min.css';
 import { InlineMath } from "react-katex";
-import { arrayToLatexMatrix, adjacencyMatrix, degreeMatrix, laplacianMatrix,
-    symNorLaplacianMatrix } from '../matrix';
+import { arrayToLatexMatrix, getMatrixRepresentation } from '../matrix';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
@@ -34,9 +33,9 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-export default function GraphRepresentation({ matrix, representation, setRepresentation }){
+export default function GraphRepresentation({ verticesLength, edges, representation, setRepresentation }){
     const classes = useStyles();
-    
+    const matrix = getMatrixRepresentation(verticesLength, edges, representation, 'latex');
     return (
         <div className={classes.root}>
             <Grid container alignItems="center" direction="column">
@@ -64,8 +63,10 @@ export default function GraphRepresentation({ matrix, representation, setReprese
                 </Grid>
                 <Grid item>
                     <DownloadMatrixComponent
-                        matrix={matrix}
+                        verticesLength={verticesLength}
+                        edges={edges}
                         representation={representation}
+                        setRepresentation={setRepresentation}
                     />
                 </Grid>
             </Grid>

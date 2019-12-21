@@ -103,6 +103,25 @@ export const rWNorLaplacianMatrix = (numberOfVertices, arrayOfEdges) => {
     return rWNLMatrix;
 }
 
+export const getMatrixRepresentation = (verticesLength, edges, representation, exprStyle) => {
+    let matrix;
+    switch(representation) {
+        case 'Degree':
+            matrix = degreeMatrix(verticesLength, edges);
+            break;
+        case 'Laplacian':
+            matrix = laplacianMatrix(verticesLength, edges);
+            break;
+        case 'SNLaplacian':
+            matrix = symNorLaplacianMatrix(verticesLength, edges, exprStyle);
+            break;
+        case 'Adjacency':
+        default:
+            matrix = adjacencyMatrix(verticesLength, edges);
+    }
+    return matrix;
+}
+
 export const minorMatrix = (array, i, j) => {
     return array
         // Get all the rows leaving out the ith

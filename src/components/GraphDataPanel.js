@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { adjacencyMatrix, degreeMatrix, laplacianMatrix,
-    symNorLaplacianMatrix } from '../matrix';
 import GraphRepresentation from './GraphRepresentation';
 import CharPolAndSpectrum from './CharPolAndSpectrum';
 import Divider from '@material-ui/core/Divider';
@@ -22,25 +20,6 @@ class GraphDataPanel extends Component {
             nextState.representation !== this.state.representation;
     }
 
-    getMatrixRepresentation(representation, verticesLength, edges, exprStyle){
-        let matrix;
-        switch(representation) {
-            case 'Degree':
-                matrix = degreeMatrix(verticesLength, edges);
-                break;
-            case 'Laplacian':
-                matrix = laplacianMatrix(verticesLength, edges);
-                break;
-            case 'SNLaplacian':
-                matrix = symNorLaplacianMatrix(verticesLength, edges, exprStyle);
-                break;
-            case 'Adjacency':
-            default:
-                matrix = adjacencyMatrix(verticesLength, edges);
-        }
-        return matrix;
-    }
-
     setRepresentation(r){
         this.setState({representation: r});
     }
@@ -55,13 +34,16 @@ class GraphDataPanel extends Component {
                 </Typography>
                 <Divider variant="middle" style={{margin: '16px'}} />
                 <GraphRepresentation
-                    matrix={this.getMatrixRepresentation(representation, vertices.length, edges, 'latex')}
-                    representation={this.state.representation}
+                    verticesLength={vertices.length}
+                    edges={edges}
+                    representation={representation}
                     setRepresentation={this.setRepresentation}
                 />
                 <Divider variant="middle" style={{margin: '16px'}} />
                 <CharPolAndSpectrum
-                    matrix={this.getMatrixRepresentation(representation, vertices.length, edges, 'approx')}
+                    verticesLength={vertices.length}
+                    edges={edges}
+                    representation={representation}
                 />
             </div>
         );
