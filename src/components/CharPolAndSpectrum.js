@@ -21,12 +21,16 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
+
 export default function CharPolAndSpectrum({ verticesLength, edges, representation }){
     const classes = useStyles();
     const matrix = getMatrixRepresentation(verticesLength, edges, representation, 'approx');
-    const wolframAlphaLink =
-        "https://www.wolframalpha.com/input/?i=" +
-        encodeURI(arrayToTextMatrix(matrix,'{{','}}',', ','},{'));
+
+    const wolframAlphaLink = () => {
+        const wolframMatrix = getMatrixRepresentation(verticesLength, edges, representation, 'mathematica');
+        return "https://www.wolframalpha.com/input/?i=" +
+            encodeURI(arrayToTextMatrix(wolframMatrix,'{{','}}',', ','},{'));
+    }
     let contentElement = {};
     if (edges.length<20){
         const {characteristicPolynomial, spectrum} = charAndSpecLatex(matrix);
@@ -67,7 +71,7 @@ export default function CharPolAndSpectrum({ verticesLength, edges, representati
                     <Typography gutterBottom variant="h6">
                         Compute Online:
                     </Typography>
-                    <Button variant="contained" color="primary" target="_blank" href={wolframAlphaLink}>
+                    <Button variant="contained" color="primary" target="_blank" href={wolframAlphaLink()}>
                         Wolfram Alpha
                     </Button>
                     <Typography gutterBottom variant="h6">
