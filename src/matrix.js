@@ -53,6 +53,7 @@ export const symNorLaplacianMatrix = (
     const adj = adjacencyMatrix(numberOfVertices, arrayOfEdges);
     const deg = degreeMatrix(numberOfVertices, arrayOfEdges);
     const simplifiedLatexSqrt = (n) => {
+        if (n === 1) return 1;
         for (let i = Math.floor(Math.sqrt(n)); i >= 2; i--){
             let r = n/(i*i);
             if(Number.isInteger(r)){
@@ -61,18 +62,40 @@ export const symNorLaplacianMatrix = (
         }
         return `\\sqrt{${n}}`;
     }
+    const simplifiedMatlabSqrt = (n) => {
+        if (n === 1) return 1;
+        for (let i = Math.floor(Math.sqrt(n)); i >= 2; i--){
+            let r = n/(i*i);
+            if(Number.isInteger(r)){
+                if (r !== 1)
+                    return `(${i}*sqrt(${n/(i*i)}))`;
+                else
+                    return i;
+            }
+        }
+        return `sqrt(${n})`;
+    }
     let SNLMatrix = [];
     for (let i = 0; i < numberOfVertices; i++) {
         SNLMatrix[i] = [];
         for (let j = 0; j < numberOfVertices; j++) {
             if (i === j) {
                 SNLMatrix[i][j] = 1;
+            } else if (adj[i][j] === 0) {
+                SNLMatrix[i][j] = 0;
+            } else if (deg[i][i]*deg[j][j] === 1) {
+                SNLMatrix[i][j] = -1;
             } else {
                 switch (expressions){
                     case 'latex':
-                        SNLMatrix[i][j] = (adj[i][j] !== 0) ?
-                            `\\frac{${-adj[i][j]}}{${simplifiedLatexSqrt(deg[i][i]*deg[j][j])}}` :
-                            0;
+                        SNLMatrix[i][j] =
+                            `\\frac{${-adj[i][j]}}{${simplifiedLatexSqrt(deg[i][i]*deg[j][j])}}`;
+                        break;
+                    case 'mathematica':
+                        SNLMatrix[i][j] = `${-adj[i][j]}/Sqrt[${deg[i][i]*deg[j][j]}]`;
+                        break;
+                    case 'matlab':
+                        SNLMatrix[i][j] = `${-adj[i][j]}/${simplifiedMatlabSqrt(deg[i][i]*deg[j][j])}`;
                         break;
                     case 'approximate':
                     default:
@@ -167,7 +190,7 @@ export const convertArrayToObjectMatrix = (array) => {
         matrix[i] = [];
         for (let j=0; j < array.length; j++) {
             const decimals = countDecimals(array[i][j]);
-            matrix[i][j] = new algebra.Expression(array[i][j]*(Math.pow(10, decimals)))
+            matrix[i][j] = new algebra.Expression(Math.round(array[i][j]*(Math.pow(10, decimals))))
                 .divide(Math.pow(10, decimals));
         }
     }

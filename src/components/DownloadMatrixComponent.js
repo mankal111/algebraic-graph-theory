@@ -175,6 +175,8 @@ export default function CustomizedDialogs({verticesLength, edges, representation
                 labelId="expression-label"
               >
                 <MenuItem value={'approx'}>Approximate</MenuItem>
+                <MenuItem value={'mathematica'}>Mathematica</MenuItem>
+                <MenuItem value={'matlab'}>Matlab</MenuItem>
                 <MenuItem value={'latex'}>LaTeX</MenuItem>
               </Select>
             </FormControl>
