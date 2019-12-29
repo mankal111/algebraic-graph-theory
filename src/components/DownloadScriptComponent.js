@@ -95,7 +95,7 @@ export default function CustomizedDialogs({verticesLength, edges, representation
   const scriptText = `syms t
 M = sym(${matrixText});
 CharacteristicPolynomial = charpoly(M,t)
-EigenValues = solve(CharacteristicPolynomial)`;
+Eigenvalues = solve(CharacteristicPolynomial)`;
 
   return (
     <div>
