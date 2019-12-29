@@ -62,6 +62,19 @@ export const symNorLaplacianMatrix = (
         }
         return `\\sqrt{${n}}`;
     }
+    const simplifiedMatlabSqrt = (n) => {
+        if (n === 1) return 1;
+        for (let i = Math.floor(Math.sqrt(n)); i >= 2; i--){
+            let r = n/(i*i);
+            if(Number.isInteger(r)){
+                if (r !== 1)
+                    return `(${i}*sqrt(${n/(i*i)}))`;
+                else
+                    return i;
+            }
+        }
+        return `sqrt(${n})`;
+    }
     let SNLMatrix = [];
     for (let i = 0; i < numberOfVertices; i++) {
         SNLMatrix[i] = [];
@@ -80,6 +93,9 @@ export const symNorLaplacianMatrix = (
                         break;
                     case 'mathematica':
                         SNLMatrix[i][j] = `${-adj[i][j]}/Sqrt[${deg[i][i]*deg[j][j]}]`;
+                        break;
+                    case 'matlab':
+                        SNLMatrix[i][j] = `${-adj[i][j]}/${simplifiedMatlabSqrt(deg[i][i]*deg[j][j])}`;
                         break;
                     case 'approximate':
                     default:
