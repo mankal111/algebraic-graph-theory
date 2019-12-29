@@ -6,6 +6,7 @@ import { charAndSpecLatex, getMatrixRepresentation, arrayToTextMatrix } from '..
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import DownloadScriptComponent from './DownloadScriptComponent';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -77,6 +78,11 @@ export default function CharPolAndSpectrum({ verticesLength, edges, representati
                     <Typography gutterBottom variant="h6">
                         Download Scripts:
                     </Typography>
+                    <DownloadScriptComponent
+                        verticesLength={verticesLength}
+                        edges={edges}
+                        representation={representation}
+                    />
                 </Grid>
             </Grid>
         </div>
