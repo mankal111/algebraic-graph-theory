@@ -19,6 +19,12 @@ const useStyles = makeStyles(theme => ({
         maxHeight: '250px',
         overflow: 'auto',
     },
+    mainGridContainer: {
+        width: '100%',
+    },
+    externalComputeContainer: {
+        width: '100%',
+    },
 }))
 
 
@@ -59,7 +65,12 @@ export default function CharPolAndSpectrum({ verticesLength, edges, representati
     }
     return (
         <div className={classes.root}>
-            <Grid container alignItems="center" direction="column">
+            <Grid
+                container
+                alignItems="center"
+                direction="column"
+                className={classes.mainGridContainer}
+            >
                 <Grid item xs>
                     <Typography gutterBottom variant="h6">
                         Characteristic polynomial and spectrum
@@ -68,7 +79,7 @@ export default function CharPolAndSpectrum({ verticesLength, edges, representati
                 <Grid item xs>
                     {contentElement}
                 </Grid>
-                <Grid item xs>
+                <Grid item xs className={classes.externalComputeContainer}>
                     <Typography gutterBottom variant="h6">
                         Compute Online:
                     </Typography>
@@ -78,11 +89,37 @@ export default function CharPolAndSpectrum({ verticesLength, edges, representati
                     <Typography gutterBottom variant="h6">
                         Download Scripts:
                     </Typography>
-                    <DownloadScriptComponent
-                        verticesLength={verticesLength}
-                        edges={edges}
-                        representation={representation}
-                    />
+                    <Grid 
+                        container
+                        alignItems="center"
+                        direction="row"
+                        justify="space-around"
+                    >
+                        <Grid item>
+                            <DownloadScriptComponent
+                                verticesLength={verticesLength}
+                                edges={edges}
+                                representation={representation}
+                                platform={"Mathematica"}
+                            />
+                        </Grid>
+                        <Grid item>
+                            <DownloadScriptComponent
+                                verticesLength={verticesLength}
+                                edges={edges}
+                                representation={representation}
+                                platform={"Matlab"}
+                            />
+                        </Grid>
+                        <Grid item>
+                            <DownloadScriptComponent
+                                verticesLength={verticesLength}
+                                edges={edges}
+                                representation={representation}
+                                platform={"Python"}
+                            />
+                        </Grid>
+                    </Grid>
                 </Grid>
             </Grid>
         </div>

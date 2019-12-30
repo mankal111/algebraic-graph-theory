@@ -52,13 +52,52 @@ const DialogActions = withStyles(theme => ({
   },
 }))(MuiDialogActions);
 
-export default function CustomizedDialogs({verticesLength, edges, representation, setRepresentation}) {
+export default function CustomizedDialogs({verticesLength, edges, representation, platform}) {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+  };
+  
+  let scriptText, matrix, matrixText, downloadButtonText, fileName;
+  switch(platform){
+    case 'Matlab':
+      fileName = 'matrix.m';
+      downloadButtonText = 'Save script to .m file';
+      matrix = getMatrixRepresentation(verticesLength, edges, representation, 'matlab');
+      matrixText = arrayToTextMatrix(matrix,'[',']',', ','; ');
+      scriptText = `syms t
+M = sym(${matrixText});
+CharacteristicPolynomial = charpoly(M,t)
+Eigenvalues = solve(CharacteristicPolynomial)`;
+      break;
+    case 'Mathematica':
+      fileName = 'matrix.wls';
+      downloadButtonText = 'Save script to .wls file';
+      matrix = getMatrixRepresentation(verticesLength, edges, representation, 'mathematica');
+      matrixText = arrayToTextMatrix(matrix,'{','}',', ','}, {');
+      scriptText = `m = ${matrixText};
+characteristicPolynomial = CharacteristicPolynomial[m, t]
+eigenvalues = Solve[characteristicPolynomial==0, t]`;
+      break;
+    case 'Python':
+      fileName = 'matrix.py';
+      downloadButtonText = 'Save script to .py file';
+      matrix = getMatrixRepresentation(verticesLength, edges, representation, 'python');
+      matrixText = arrayToTextMatrix(matrix,'[[',']]',', ','], [');
+      scriptText = `import math
+from sympy import Matrix
+      
+M = Matrix(${matrixText})
+print("Characteristic Polynomial:")
+print(M.charpoly().as_expr())
+print("Eigenvalues:")
+print(M.eigenvals())`;
+      break;
+    default:
+      scriptText = '';
   };
 
   const copyText = () => {
@@ -79,7 +118,7 @@ export default function CustomizedDialogs({verticesLength, edges, representation
     const a = document.createElement('a');
     const url = URL.createObjectURL(file);
     a.href = url;
-    a.download = 'matrix.m';
+    a.download = fileName;
     document.body.appendChild(a);
     // Trigger download
     a.click();
@@ -89,13 +128,6 @@ export default function CustomizedDialogs({verticesLength, edges, representation
       window.URL.revokeObjectURL(url);
     }, 0);
   }
-  const matrix = getMatrixRepresentation(verticesLength, edges, representation, 'matlab');
-  
-  const matrixText = arrayToTextMatrix(matrix,'[',']',', ','; ');
-  const scriptText = `syms t
-M = sym(${matrixText});
-CharacteristicPolynomial = charpoly(M,t)
-Eigenvalues = solve(CharacteristicPolynomial)`;
 
   return (
     <div>
@@ -106,11 +138,11 @@ Eigenvalues = solve(CharacteristicPolynomial)`;
         onClick={handleClickOpen}
         startIcon={<GetApp />}
       >
-        Download matlab script
+        {platform}
       </Button>
       <Dialog fullScreen onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Download matrix
+  Download a {platform} script that computes the characteristic polynomial and the spectrum
         </DialogTitle>
         <DialogContent dividers>
             <textarea
@@ -125,7 +157,7 @@ Eigenvalues = solve(CharacteristicPolynomial)`;
             Copy script to clipboard
           </Button>
           <Button autoFocus onClick={download} color="primary">
-            Save script to .m file
+            {downloadButtonText}
           </Button>
         </DialogActions>
       </Dialog>

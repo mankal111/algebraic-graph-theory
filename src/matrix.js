@@ -94,6 +94,9 @@ export const symNorLaplacianMatrix = (
                     case 'mathematica':
                         SNLMatrix[i][j] = `${-adj[i][j]}/Sqrt[${deg[i][i]*deg[j][j]}]`;
                         break;
+                    case 'python':
+                        SNLMatrix[i][j] = `${-adj[i][j]}/math.sqrt(${deg[i][i]*deg[j][j]})`;
+                        break;
                     case 'matlab':
                         SNLMatrix[i][j] = `${-adj[i][j]}/${simplifiedMatlabSqrt(deg[i][i]*deg[j][j])}`;
                         break;
