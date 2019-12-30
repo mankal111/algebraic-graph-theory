@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c0eb1fefc0a04756bac3d99355549c3a",
+    "revision": "4a6f166fb1e6caae18232e5c5e7162d7",
     "url": "/algebraic-graph-theory/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/algebraic-graph-theory/static/css/2.adcbf3d3.chunk.css"
   },
   {
-    "revision": "144abd74f3c24fd48c75",
+    "revision": "b28a115dc6289641c150",
     "url": "/algebraic-graph-theory/static/css/main.7d96267f.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/algebraic-graph-theory/static/js/2.8d44b7b9.chunk.js.LICENSE"
   },
   {
-    "revision": "144abd74f3c24fd48c75",
-    "url": "/algebraic-graph-theory/static/js/main.aaa7e4d8.chunk.js"
+    "revision": "b28a115dc6289641c150",
+    "url": "/algebraic-graph-theory/static/js/main.1e3581bd.chunk.js"
   },
   {
     "revision": "f1ca288c6e02216603e9",
