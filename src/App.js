@@ -7,7 +7,6 @@ import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import ToolBar from '@material-ui/core/ToolBar';
 
-import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import GraphCanvas from './components/GraphCanvas';
@@ -55,7 +54,7 @@ export default function App() {
       <AppBar className={classes.appBar}>
         <ToolBar>
           <Typography variant="h6" className={classes.title}>
-            Graph Playground
+            Graph Maker
           </Typography>
           <OptionsContainer />
         </ToolBar>
