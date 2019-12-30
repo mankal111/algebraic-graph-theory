@@ -83,9 +83,9 @@ class GraphCanvas extends Component {
         const {x, y} = this.refs.stage.getPointerPosition();
         e.evt.preventDefault();
         // Zoom in or out by steps of 0.1
-        if (e.evt.deltaY > 0)
+        if (e.evt.deltaY < 0)
             this.delayedZoomCanvas(x, y, 1.1);
-        else if (e.evt.deltaY < 0)
+        else if (e.evt.deltaY > 0)
             this.delayedZoomCanvas(x, y, 0.9);
      }
 
