@@ -77,7 +77,7 @@ Eigenvalues = solve(CharacteristicPolynomial)`;
       fileName = 'matrix.wls';
       downloadButtonText = 'Save script to .wls file';
       matrix = getMatrixRepresentation(verticesLength, edges, representation, 'mathematica');
-      matrixText = arrayToTextMatrix(matrix,'{','}',', ','}, {');
+      matrixText = arrayToTextMatrix(matrix,'{{','}}',', ','}, {');
       scriptText = `m = ${matrixText};
 characteristicPolynomial = CharacteristicPolynomial[m, t]
 eigenvalues = Solve[characteristicPolynomial==0, t]`;
