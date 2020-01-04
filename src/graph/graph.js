@@ -1,5 +1,5 @@
-class Graph {
-    constructor(points, edges){
+export default class Graph {
+    constructor(points = [], edges = []){
         this.points = points;
         this.edges = edges;
     }
