@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.js": "/algebraic-graph-theory/static/js/main.dca5160d.chunk.js",
-    "main.js.map": "/algebraic-graph-theory/static/js/main.dca5160d.chunk.js.map",
+    "main.js": "/algebraic-graph-theory/static/js/main.2bdd920c.chunk.js",
+    "main.js.map": "/algebraic-graph-theory/static/js/main.2bdd920c.chunk.js.map",
     "runtime-main.js": "/algebraic-graph-theory/static/js/runtime-main.8ecbef0f.js",
     "runtime-main.js.map": "/algebraic-graph-theory/static/js/runtime-main.8ecbef0f.js.map",
     "static/css/2.adcbf3d3.chunk.css": "/algebraic-graph-theory/static/css/2.adcbf3d3.chunk.css",
     "static/js/2.ba30532b.chunk.js": "/algebraic-graph-theory/static/js/2.ba30532b.chunk.js",
     "static/js/2.ba30532b.chunk.js.map": "/algebraic-graph-theory/static/js/2.ba30532b.chunk.js.map",
     "index.html": "/algebraic-graph-theory/index.html",
-    "precache-manifest.fe70dea99b906a8fc574548c6fc0c138.js": "/algebraic-graph-theory/precache-manifest.fe70dea99b906a8fc574548c6fc0c138.js",
+    "precache-manifest.a223daec1b0301e2de8c32318ec200d4.js": "/algebraic-graph-theory/precache-manifest.a223daec1b0301e2de8c32318ec200d4.js",
     "service-worker.js": "/algebraic-graph-theory/service-worker.js",
     "static/css/2.adcbf3d3.chunk.css.map": "/algebraic-graph-theory/static/css/2.adcbf3d3.chunk.css.map",
     "static/js/2.ba30532b.chunk.js.LICENSE": "/algebraic-graph-theory/static/js/2.ba30532b.chunk.js.LICENSE",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.8ecbef0f.js",
     "static/css/2.adcbf3d3.chunk.css",
     "static/js/2.ba30532b.chunk.js",
-    "static/js/main.dca5160d.chunk.js"
+    "static/js/main.2bdd920c.chunk.js"
   ]
 }
