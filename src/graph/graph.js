@@ -4,9 +4,11 @@ export default class Graph {
     constructor() {
         this.vertices = [];
         this.adjacencyMatrix = [[]];
-        this.simple = true;
-        this.directed = false;
-        this.allowLoops = false;
+        this.allow = {
+            multiple: true,
+            directed: true,
+            loops: true,
+        }
     }
 
     static create() {
