@@ -1,10 +1,11 @@
-import { arrayOfEmptyObjects } from './matrix';
+import { arrayOfEmptyObjects, zeros } from './matrix';
 
 export default class Graph {
     constructor() {
-        this.vertices = [];
-        this.adjacencyMatrix = [[]];
-        this.allow = {
+        this._vertices = [];
+        this._adjacencyMatrix = [[]];
+        this._numberOfEdges = 0;
+        this._allow = {
             multiple: true,
             directed: true,
             loops: true,
@@ -17,15 +18,34 @@ export default class Graph {
 
     initializeVertices(v) {
         if (Number.isInteger(v))
-            this.vertices = arrayOfEmptyObjects(v);
+            this._vertices = arrayOfEmptyObjects(v);
         else if (Array.isArray(v))
-            this.vertices = v;
+            this._vertices = v;
         else
-            this.vertices = [];
+            this._vertices = [];
+        this._adjacencyMatrix = zeros(this._vertices.length);
         return this;
     }
 
+    addEdge(edge) {
+        if (
+            edge.length !== 2 ||
+            !Number.isInteger(edge[0]) ||
+            !Number.isInteger(edge[1])
+        ) {
+            throw new Error('The edge should be represented by an array of 2 integers');
+        } else {
+            this._adjacencyMatrix[edge[0]][edge[1]] += 1;
+            this._numberOfEdges++;
+        }
+        return this;
+    }
+
+    numberOfEdges() {
+        return this._numberOfEdges;
+    }
+
     numberOfVertices() {
-        return this.vertices.length;
+        return this._vertices.length;
     }
 }
