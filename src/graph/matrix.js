@@ -4,3 +4,6 @@ export const arrayOfEmptyObjects = n => {
         array.push({});
     return array;
 }
+
+export const zeros = (h, w = h) =>
+    Array(h).fill().map(() => Array(w).fill(0));
