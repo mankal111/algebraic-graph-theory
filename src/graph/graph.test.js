@@ -15,3 +15,10 @@ it('Returns the number of vertices', () => {
     expect(graph.numberOfVertices()).toEqual(0);
     expect(graph.initializeVertices(5).numberOfVertices()).toEqual(5);
 });
+
+it('Initializes vertices', () => {
+    expect(Graph.create().initializeVertices(5).numberOfVertices()).toEqual(5);
+    expect(Graph.create()
+        .initializeVertices([{some: 'data'},{some: 'otherData'},{}])
+        .numberOfVertices()).toEqual(3);
+})
