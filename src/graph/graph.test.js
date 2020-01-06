@@ -1,18 +1,17 @@
 import Graph from "./graph";
 
-it('Creates new object', () => {
+it('Creates new Graph object', () => {
     const graph = new Graph();
     expect(graph).toBeTruthy();
 });
 
-it('Throws error if parameters are not empty or integer and array or two arrays', () => {
-    let graph;
-    expect(() => {
-        graph = new Graph('string', []);
-    }).toThrow();
-});
+it('Creates new Graph object using create() method', () => {
+    const graph = Graph.create();
+    expect(graph).toBeTruthy();
+})
 
-it('Returns the number of points', () => {
-    const graph = new Graph(5);
-    expect(graph.numberOfPoints()).toEqual(5);
+it('Returns the number of vertices', () => {
+    const graph = new Graph();
+    expect(graph.numberOfVertices()).toEqual(0);
+    expect(graph.initializeVertices(5).numberOfVertices()).toEqual(5);
 });
