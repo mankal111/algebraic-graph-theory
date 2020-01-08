@@ -36,14 +36,20 @@ export default class Graph {
             throw new Error('The edge should be represented by an array of 2 integers');
         } else {
             if (!this._allow.loops && (edge[0] === edge[1])) return this;
+            if (!this._allow.multiple && this.areAdjacent(edge)) return this;
             this._adjacencyMatrix[edge[0]][edge[1]] += 1;
             this._numberOfEdges++;
         }
         return this;
     }
 
-    areAdjacent(n1, n2) {
-        return !!this._adjacencyMatrix[n1][n2];
+    areAdjacent(v1, v2) {
+        if (Array.isArray(v1)) [v1, v2] = v1;
+        return !!this._adjacencyMatrix[v1][v2];
+    }
+
+    edgeMultiplicity(v1, v2) {
+        return this._adjacencyMatrix[v1][v2];
     }
 
     numberOfEdges() {
@@ -54,8 +60,18 @@ export default class Graph {
         return this._vertices.length;
     }
 
+    removeMultipleEdges() {
+        this._adjacencyMatrix.forEach((row, rowIndex) => 
+            row.forEach((element, elementIndex) => {
+                this._adjacencyMatrix[rowIndex][elementIndex] = 
+                    element > 0 ? 1 : 0;
+            })
+        );
+    }
+
     allowMultipleEdges(b = true) {
         this._allow.multiple = b;
+        if(!b) this.removeMultipleEdges();
         return this;
     }
 
