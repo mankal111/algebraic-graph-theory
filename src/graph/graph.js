@@ -7,9 +7,9 @@ export default class Graph {
         this._numberOfEdges = 0;
         this._allow = {
             multiple: true,
-            directed: true,
             loops: true,
         }
+        this._directed = false;
     }
 
     static create() {
@@ -38,6 +38,7 @@ export default class Graph {
             if (!this._allow.loops && (edge[0] === edge[1])) return this;
             if (!this._allow.multiple && this.areAdjacent(edge)) return this;
             this._adjacencyMatrix[edge[0]][edge[1]] += 1;
+            if (!this._directed) this._adjacencyMatrix[edge[1]][edge[0]] += 1;
             this._numberOfEdges++;
         }
         return this;
@@ -75,8 +76,22 @@ export default class Graph {
         return this;
     }
 
-    allowDirectedEdges(b = true) {
-        this._allow.directed = b;
+    removeDirections() {
+        for (let i = 0; i < this.numberOfVertices(); i++){
+            for (let j = i; j < this.numberOfVertices(); j++) {
+                this._adjacencyMatrix[i][j] += this._adjacencyMatrix[j][i];
+                this._adjacencyMatrix[j][i] = this._adjacencyMatrix[i][j];
+            };
+        };
+        this._directed = false;
+    }
+
+    directed(b = true) {
+        if (b) {
+            this._directed = true;
+        } else {
+            this.removeDirections();
+        };
         return this;
     }
 

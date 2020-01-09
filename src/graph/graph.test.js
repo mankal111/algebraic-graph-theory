@@ -66,3 +66,21 @@ it('Removes multiple edges', () => {
     // We should not be allowed to add multiple edges
     expect(graph.addEdge([1, 2]).edgeMultiplicity(1, 2)).toBe(1);
 });
+
+it('Directed graph behaves properly', () => {
+    // Add two edges between vertices 1 and 2 with opposite direction
+    let graph = Graph.create()
+        .directed().allowMultipleEdges()
+        .initializeVertices(3)
+        .addEdge([1, 2]).addEdge([2, 1]);
+    // Ensure that the multiplicity of 1-2 edge is 1
+    expect(graph.edgeMultiplicity(1, 2)).toBe(1);
+    // Ensure that the multiplicity of 2-1 edge is 1
+    expect(graph.edgeMultiplicity(2, 1)).toBe(1);
+    // Turn the directed graph to a non directed one
+    graph.directed(false);
+    // Forgeting direction there are now 2 edges between 1 and 2
+    expect(graph.edgeMultiplicity(1, 2)).toBe(2);
+    // Even if we add an edge 2-1, it counts as an edge 1-2
+    expect(graph.addEdge([2, 1]).edgeMultiplicity(1, 2)).toBe(3);
+});
