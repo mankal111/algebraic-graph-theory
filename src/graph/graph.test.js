@@ -29,6 +29,12 @@ it('Adds edges', () => {
     expect(() => graph.addEdge([1, 'string'])).toThrow();
 });
 
+it('Deletes edges', () => {
+    let graph = Graph.create().initializeVertices(3);
+    expect(graph.addEdge([0, 1]).deleteEdge([0, 1]).areAdjacent(0, 1)).toBe(false);
+    expect(graph.directed(false).addEdge([1, 0]).deleteEdge([0, 1]).areAdjacent(0, 1)).toBe(false);
+});
+
 it('Checks adjacency', () => {
     let graph = Graph.create().initializeVertices(3).addEdge([1, 2]);
     expect(graph.areAdjacent(1, 2)).toBe(true);

@@ -44,6 +44,21 @@ export default class Graph {
         return this;
     }
 
+    deleteEdge(edge) {
+        if (
+            edge.length !== 2 ||
+            !Number.isInteger(edge[0]) ||
+            !Number.isInteger(edge[1])
+        ) {
+            throw new Error('The edge should be represented by an array of 2 integers');
+        } else {
+            this._adjacencyMatrix[edge[0]][edge[1]] -= 1;
+            if (!this._directed) this._adjacencyMatrix[edge[1]][edge[0]] -= 1;
+            this._numberOfEdges--;
+        }
+        return this;
+    }
+
     areAdjacent(v1, v2) {
         if (Array.isArray(v1)) [v1, v2] = v1;
         return !!this._adjacencyMatrix[v1][v2];
