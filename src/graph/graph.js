@@ -27,35 +27,29 @@ export default class Graph {
         return this;
     }
 
-    addEdge(edge) {
+    checkEdgeRepresentation(edge){
         if (
             edge.length !== 2 ||
             !Number.isInteger(edge[0]) ||
             !Number.isInteger(edge[1])
-        ) {
-            throw new Error('The edge should be represented by an array of 2 integers');
-        } else {
-            if (!this._allow.loops && (edge[0] === edge[1])) return this;
-            if (!this._allow.multiple && this.areAdjacent(edge)) return this;
-            this._adjacencyMatrix[edge[0]][edge[1]] += 1;
-            if (!this._directed) this._adjacencyMatrix[edge[1]][edge[0]] += 1;
-            this._numberOfEdges++;
-        }
+        ) throw new Error('The edge should be represented by an array of 2 integers');
+    }
+
+    addEdge(edge) {
+        this.checkEdgeRepresentation(edge);
+        if (!this._allow.loops && (edge[0] === edge[1])) return this;
+        if (!this._allow.multiple && this.areAdjacent(edge)) return this;
+        this._adjacencyMatrix[edge[0]][edge[1]] += 1;
+        if (!this._directed) this._adjacencyMatrix[edge[1]][edge[0]] += 1;
+        this._numberOfEdges++;
         return this;
     }
 
     deleteEdge(edge) {
-        if (
-            edge.length !== 2 ||
-            !Number.isInteger(edge[0]) ||
-            !Number.isInteger(edge[1])
-        ) {
-            throw new Error('The edge should be represented by an array of 2 integers');
-        } else {
-            this._adjacencyMatrix[edge[0]][edge[1]] -= 1;
-            if (!this._directed) this._adjacencyMatrix[edge[1]][edge[0]] -= 1;
-            this._numberOfEdges--;
-        }
+        this.checkEdgeRepresentation(edge);
+        this._adjacencyMatrix[edge[0]][edge[1]] -= 1;
+        if (!this._directed) this._adjacencyMatrix[edge[1]][edge[0]] -= 1;
+        this._numberOfEdges--;
         return this;
     }
 
