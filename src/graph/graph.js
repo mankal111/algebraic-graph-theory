@@ -47,9 +47,11 @@ export default class Graph {
 
     deleteEdge(edge) {
         this.checkEdgeRepresentation(edge);
-        this._adjacencyMatrix[edge[0]][edge[1]] -= 1;
-        if (!this._directed) this._adjacencyMatrix[edge[1]][edge[0]] -= 1;
-        this._numberOfEdges--;
+        if (this.areAdjacent(...edge)) {
+            this._adjacencyMatrix[edge[0]][edge[1]] -= 1;
+            if (!this._directed) this._adjacencyMatrix[edge[1]][edge[0]] -= 1;
+            this._numberOfEdges--;
+        }
         return this;
     }
 

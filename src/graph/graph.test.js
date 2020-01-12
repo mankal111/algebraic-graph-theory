@@ -33,6 +33,8 @@ it('Deletes edges', () => {
     let graph = Graph.create().initializeVertices(3);
     expect(graph.addEdge([0, 1]).deleteEdge([0, 1]).areAdjacent(0, 1)).toBe(false);
     expect(graph.directed(false).addEdge([1, 0]).deleteEdge([0, 1]).areAdjacent(0, 1)).toBe(false);
+    // After removing an edge that doesn't exist, its multiplicity sould be 0 (not -1)
+    expect(Graph.create().initializeVertices(3).deleteEdge([0, 1]).edgeMultiplicity(0, 1)).toEqual(0);
 });
 
 it('Checks adjacency', () => {
