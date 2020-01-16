@@ -75,10 +75,16 @@ export default class Graph {
     removeMultipleEdges() {
         this._adjacencyMatrix.forEach((row, rowIndex) => 
             row.forEach((element, elementIndex) => {
-                this._adjacencyMatrix[rowIndex][elementIndex] = 
-                    element > 0 ? 1 : 0;
+                if (element > 1) {
+                    // if it is not directed, each edge is counted in two opposite elements
+                    // for this reason we must not count the elements below diagonal
+                    if (this._directed || (rowIndex >= elementIndex))
+                        this._numberOfEdges -= element - 1;
+                    this._adjacencyMatrix[rowIndex][elementIndex] = 1
+                }
             })
         );
+        return this;
     }
 
     allowMultipleEdges(b = true) {

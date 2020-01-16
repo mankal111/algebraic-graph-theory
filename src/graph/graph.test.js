@@ -67,10 +67,12 @@ it('Removes multiple edges', () => {
     let graph = Graph.create().allowMultipleEdges().initializeVertices(3).addEdge([1, 2]).addEdge([1, 2]);
     // Ensure that the multiplicity of 1-2 edge is 2
     expect(graph.edgeMultiplicity(1, 2)).toBe(2);
+    expect(graph.numberOfEdges()).toBe(2);
     // Remove multiple edges and do not allow creating one from now on
     graph.allowMultipleEdges(false);
     // The second edge should be removed
     expect(graph.edgeMultiplicity(1, 2)).toBe(1);
+    expect(graph.numberOfEdges()).toBe(1);
     // We should not be allowed to add multiple edges
     expect(graph.addEdge([1, 2]).edgeMultiplicity(1, 2)).toBe(1);
 });
